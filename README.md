@@ -1,4 +1,4 @@
-# Configuration files for zsh, git, alacritty, tmux and neovim
+# Arch configuration files
 
 ### Dependencies
 
