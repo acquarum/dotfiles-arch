@@ -66,7 +66,7 @@ vim.api.nvim_create_autocmd('PackChanged', {
       if not ev.data.active then
         vim.cmd.packadd 'nvim-treesitter'
       end
-      vim.cmd('TSUpdate'):wait()
+      vim.cmd('TSUpdate')
     end
 
     if name == 'telescope-fzf-native' then

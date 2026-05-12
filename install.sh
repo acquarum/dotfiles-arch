@@ -29,12 +29,11 @@ nvim_dir="$config_dir/nvim"
 
 main() {
 	# Install base dependencies
-	sudo pacman -S stow gzip tar xz make gcc openssh
+	sudo pacman -S stow gzip tar xz make gcc openssh which
 
 	# Create the symlinks to the configuration files
-	mdkir -p "${zsh_dir}" "${alacritty_dir}" "${git_dir}" "${tmux_dir}" "${nvim_dir}"
+	mkdir -p "${zsh_dir}" "${alacritty_dir}" "${git_dir}" "${tmux_dir}" "${nvim_dir}"
 	stow --adopt .
-	git restore .
 
 	##########################
 	### INSTALL MAIN TOOLS ###
@@ -45,7 +44,7 @@ main() {
 	sudo pacman -S git
 
 	ssh-keygen -t ed25519 -C "edoardo980@gmail.com" -f "$HOME/.ssh/id_ed25519" -N "" -q
-	eval $(ssh-agent)
+	eval "$(ssh-agent)"
 	ssh-add ~/.ssh/id_ed25519
 
 	##### ZSH #####
@@ -56,7 +55,7 @@ main() {
 	git clone https://github.com/ohmyzsh/ohmyzsh.git "${ohmyzsh_dir}"
 
 	# Make zsh your login shell
-	sudo chsh -s "$(which zsh)"
+	chsh -s "$(which zsh)"
 
 	# powerlevel10k
 	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
