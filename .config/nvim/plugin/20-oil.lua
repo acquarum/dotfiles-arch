@@ -204,8 +204,4 @@ require('oil').setup {
   },
 }
 
-require('core.helpers').map(
-  '-',
-  '<CMD>vsplit | wincmd H | vertical resize 40 | Oil<CR>',
-  'Oil: open parent directory of current buffer'
-)
+require('core.helpers').map('-', '<CMD>Oil<CR>', 'Oil: open parent directory of current buffer')

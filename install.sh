@@ -46,6 +46,7 @@ main() {
 	ssh-keygen -t ed25519 -C "edoardo980@gmail.com" -f "$HOME/.ssh/id_ed25519" -N "" -q
 	eval "$(ssh-agent)"
 	ssh-add ~/.ssh/id_ed25519
+	git remote set-url origin git@github.com:BlinDzOrE/dotfiles-arch.git
 
 	##### ZSH #####
 
@@ -87,12 +88,10 @@ main() {
 
 	sudo pacman -S alacritty
 
-
 	##### NEOVIM #####
 
 	sudo pacman -S nvim clang fd ripgrep tree-sitter-cli wl-clipboard ttf-jetbrains-mono-nerd \
 		shellcheck shfmt bash-language-server lua-language-server stylua
-
 
 	##### FINISH #####
 	echo "Add this key to your GitHub account:"
