@@ -1,10 +1,9 @@
-
 ---------------------
 ---- MY PROGRAMS ----
 ---------------------
 
 -- Set programs that you use
-Terminal    = "alacritty"
+Terminal = "alacritty"
 FileManager = "dolphin"
-Menu        = "hyprlauncher"
-
+Menu = "hyprlauncher"
+Browser = "chromium"
