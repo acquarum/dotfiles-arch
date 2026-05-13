@@ -16,7 +16,6 @@ args = [
 
 dynamic_padding = true
 decorations = "none"
-startup_mode = "Maximized"
 
 
 [font]
