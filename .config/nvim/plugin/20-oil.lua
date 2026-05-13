@@ -83,6 +83,9 @@ require('oil').setup {
       function()
         require('telescope.builtin').find_files {
           cwd = require('oil').get_current_dir(),
+          file_ignore_patterns = { '^node_modules/', '^.git/', '^.venv/' },
+          hidden = true,
+          follow = true,
         }
       end,
       mode = 'n',

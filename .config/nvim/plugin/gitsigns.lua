@@ -55,7 +55,7 @@ require('gitsigns').setup {
     local map = require('core.helpers').map
 
     -- Navigation
-    map(']c', function()
+    map(']h', function()
       if vim.wo.diff then
         vim.cmd.normal { ']c', bang = true }
       else
@@ -63,7 +63,7 @@ require('gitsigns').setup {
       end
     end, { buffer = bufnr, desc = 'Gitsigns: goto next hunk' })
 
-    map('[c', function()
+    map('[h', function()
       if vim.wo.diff then
         vim.cmd.normal { '[c', bang = true }
       else
