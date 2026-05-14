@@ -31,7 +31,7 @@ vim.opt.showmode = false -- We don"t need to see things like -- INSERT -- anymor
 vim.opt.pumheight = 10 -- Pop up menu height (default: 0)
 vim.opt.conceallevel = 0 -- So that `` is visible in markdown files (default: 1)
 
-local undodir = vim.fn.expand '~/.vim/undodir'
+local undodir = vim.fn.expand '~/.local/share/nvim/undodir'
 if vim.fn.isdirectory(undodir) == 0 then vim.fn.mkdir(undodir, 'p') end
 vim.opt.backup = false -- Creates a backup file (default: false)
 vim.opt.writebackup = false -- If a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited (default: true)
