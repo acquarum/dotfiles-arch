@@ -10,3 +10,6 @@ require('config.misc')
 require('config.input')
 require('config.keybindings')
 require('config.window-rules')
+
+-- For Noctalia Color templates
+require("noctalia")

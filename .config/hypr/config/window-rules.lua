@@ -67,4 +67,10 @@ hl.window_rule({
 --     border_size = 0,
 --     rounding    = 0,
 -- })
-
+--
+hl.workspace_rule({ workspace = "1", monitor = "Virtual-1", persistent = true })
+hl.workspace_rule({ workspace = "2", monitor = "Virtual-1", persistent = true })
+hl.workspace_rule({ workspace = "3", monitor = "Virtual-1", persistent = true })
+hl.workspace_rule({ workspace = "4", monitor = "Virtual-1", persistent = true })
+hl.workspace_rule({ workspace = "5", monitor = "Virtual-1", persistent = true })
+hl.workspace_rule({ workspace = "6", monitor = "Virtual-1", persistent = true })
