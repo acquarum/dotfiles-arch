@@ -7,12 +7,15 @@ if [[ "${TRACE-0}" == "1" ]]; then
 	set -o xtrace
 fi
 
-cd "$(dirname "$0")"
+dot_dir=$(realpath "$(dirname "$0")")
+
+cd "$dot_dir"
 
 home_dir="/home/acquarum"
 
 # Install directories
 config_dir="$home_dir/.config"
+aur_dir=$home_dir/aur
 
 zsh_dir="$config_dir/zsh"
 alacritty_dir="$config_dir/alacritty"
@@ -41,21 +44,19 @@ main() {
 	############################
 
 	# Install timeshift to create snapshots
-	sudo pacman -S timeshift
+	sudo pacman --needed -S timeshift
 
 	# Create a BEFORE snapshot
 	sudo timeshift --create --comment "Before configuration" --tags D
 
-	# Install base dependencies
-	sudo pacman -S stow gzip tar xz make gcc openssh which pipewire \
-		nftables bluez bluez-utils base-devel
+	# Install base packages
+	sudo pacman --needed -S curl wget stow gzip unzip tar xz xz-utils make gcc openssh which locate \
+		nftables networkmanager bluez bluez-utils base-devel man-db man-pages texinfo acpid \
+		pipewire wireplumber wl-clipboard
 
 	# Install useful packages
-	sudo pacman -S networkmanager network-manager-applet \
-		locate blueman  man-db man-pages \
-		texinfo chromium acpid wireplumber wl-clipboard \
-		xz-utils nwg-look noto-fonts noto-fonts-cjk noto-fonts-emoji \
-		noto-fonts-extra pacman-contrib
+	sudo pacman --needed -S network-manager-applet blueman chromium nwg-look noto-fonts noto-fonts-cjk \
+		noto-fonts-emoji noto-fonts-extra pacman-contrib
 
 	sudo systemctl enable NetworkManager
 	sudo systemctl enable sshd
@@ -63,7 +64,7 @@ main() {
 	sudo systemctl enable acpid
 
 	# Setup swap on zram
-	sudo pacman -S zram-generator
+	sudo pacman --needed -S zram-generator
 	echo "[zram0]
 zram-size = ram / 2
 compression-algorithm = zstd
@@ -83,29 +84,29 @@ mount-point = /dev/zram0
 	stow .
 
 	##### PARU AUR HELPER #####
-	git clone https://aur.archlinux.org/paru.git
-	cd paru
-	makepkg -si
+	mkdir -p $aur_dir
+	git clone https://aur.archlinux.org/paru.git --depth 1 $aur_dir/paru
+	(cd $aur_dir/paru && makepkg -si)
 
-	##### SDDM DISPLAY MANAGER #####
-	sudo pacman -S --needed \
-		qt5-base sddm qt5-graphicaleffects qt5-quickcontrols2 qt5-svg \
-		sddm-kcm qt5-declarative
-	sudo mkdir -p /usr/share/sddm/themes
-	sudo tar -xzvf ./resources/sugar-candy.tar.gz -C /usr/share/sddm/themes
-	sudo mkdir -p /etc/sddm.conf.d
-	echo "[Theme]
-Current=sugar-candy
-" | sudo tee /etc/sddm.conf.d/sddm.conf
-	sudo systemctl enable sddm.service
+	##### KMSCON #####
+	sudo pacman --needed -S kmscon
+	sudo systemctl disable getty@.service
+	sudo systemctl enable kmsconvt@.service
+	echo "hwaccel" | sudo tee /etc/kmscon/kmscon.conf
 
+	##### LY DISPLAY MANAGER #####
+	sudo pacman --needed -S ly brightnessctl
+	sudo systemctl disable kmsconvt@tty1.service
+	sudo systemctl enable ly@tty1.service
+	sudo mv /etc/ly/config.ini /etc/ly/config.ini.default
+	sudo ln -s "$dot_dir/resources/ly/config.ini" /etc/ly/config.ini
 
 	##### GRUB THEME #####
-	unzip ./resources/grub-dark-matter.zip -d ./resources/grub-dark-matter
-	(cd ./resources/ && sudo python3 darkmatter-theme.py -i)
+	# unzip ./resources/grub-dark-matter.zip -d ./resources/grub-dark-matter
+	# (cd ./resources/grub-dark-matter && sudo python3 darkmatter-theme.py -i)
 
 	##### GTK THEME #####
-	mkdir -p ${home_dir}/.local/share/themes
+	mkdir -p "$XDG_DATA_HOME/themes"
 	tar -xJvf ./resources/Nordic-darker.tar.xz -C "$XDG_DATA_HOME/themes/"
 
 	##### CURSOR THEME #####
@@ -116,9 +117,8 @@ Current=sugar-candy
 	wget -qO- https://git.io/papirus-icon-theme-install | env DESTDIR="$XDG_DATA_HOME/icons" sh
 
 	##### HYPRLAND #####
-	sudo pacman -S qt5-wayland qt6-wayland hyprland \
-		xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
-		hyprpolkitagent hyprshot hyprshutdown hyprwcenter hyprsysteminfo \
+	sudo pacman --needed -S qt5-wayland qt6-wayland hyprland xdg-desktop-portal-hyprland \
+		xdg-desktop-portal-gtk hyprpolkitagent hyprshot hyprshutdown hyprwcenter hyprsysteminfo \
 		cliphist
 
 	##### NOCTALIA #####
@@ -131,10 +131,10 @@ Current=sugar-candy
 	git remote set-url origin git@github.com:BlinDzOrE/dotfiles-arch.git
 
 	##### ZSH #####
-	sudo pacman -S zsh
+	sudo pacman --needed -S zsh
 
 	# oh-my-zsh
-	git clone https://github.com/ohmyzsh/ohmyzsh.git "${ohmyzsh_dir}"
+	git clone https://github.com/ohmyzsh/ohmyzsh.git --depth 1 "${ohmyzsh_dir}"
 
 	# Make zsh your login shell
 	chsh -s "$(which zsh)"
@@ -144,34 +144,34 @@ Current=sugar-candy
 		"${ohmyzsh_themes}/powerlevel10k"
 
 	# zsh-completions
-	git clone https://github.com/zsh-users/zsh-completions.git \
+	git clone https://github.com/zsh-users/zsh-completions.git --depth 1 \
 		"${ohmyzsh_plugins}/zsh-completions"
 
 	# zsh-autosuggestions
-	git clone https://github.com/zsh-users/zsh-autosuggestions \
+	git clone https://github.com/zsh-users/zsh-autosuggestions --depth 1 \
 		"${ohmyzsh_plugins}/zsh-autosuggestions"
 
 	# zsh-syntax-highlighting
-	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git --depth 1 \
 		"${ohmyzsh_plugins}/zsh-syntax-highlighting"
 
 	##### TMUX #####
-	sudo pacman -S tmux
+	sudo pacman --needed -S tmux
 
 	# Instal tpm (tmux-plugin-manager)
 	mkdir "${tmux_dir}/plugins"
-	git clone https://github.com/tmux-plugins/tpm "${tmux_dir}/plugins/tpm"
+	git clone --depth 1 https://github.com/tmux-plugins/tpm "${tmux_dir}/plugins/tpm"
 	bash -c "${tmux_dir}/plugins/tpm/bin/install_plugins"
 
 	##### ALACRITTY #####
-	sudo pacman -S alacritty
+	sudo pacman --needed -S alacritty
 
 	##### NEOVIM #####
-	sudo pacman -S nvim clang fd ripgrep tree-sitter-cli wl-clipboard ttf-jetbrains-mono-nerd \
+	sudo pacman --needed -S nvim clang fd ripgrep tree-sitter-cli wl-clipboard ttf-jetbrains-mono-nerd \
 		shellcheck shfmt bash-language-server lua-language-server stylua
 
 	##### VIM #####
-	sudo pacman -S vim
+	sudo pacman --needed -S vim
 
 	# Create an AFTER snapshot
 	sudo timeshift --create --comment "After configuration" --tags D
