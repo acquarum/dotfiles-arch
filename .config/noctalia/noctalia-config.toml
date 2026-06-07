@@ -1,0 +1,88 @@
+[bar.default]
+background_opacity = 0.59999999999999998
+center = [ "group:g1" ]
+contact_shadow = true
+end = [
+    "tray",
+    "ram",
+    "cpu",
+    "keyboard_layout",
+    "notifications",
+    "network",
+    "bluetooth",
+    "volume",
+    "brightness",
+    "battery"
+]
+font_weight = 700
+margin_edge = 0
+margin_ends = 0
+radius = 0
+start = [ "workspaces", "active_window" ]
+widget_spacing = 12
+
+    [[bar.default.capsule_group]]
+    fill = "surface_variant"
+    id = "g1"
+    members = [ "date", "clock" ]
+    opacity = 0.0
+    padding = 6.0
+
+[[control_center.shortcuts]]
+type = "wifi"
+
+[[control_center.shortcuts]]
+type = "bluetooth"
+
+[[control_center.shortcuts]]
+type = "caffeine"
+
+[[control_center.shortcuts]]
+type = "notification"
+
+[[control_center.shortcuts]]
+type = "power_profile"
+
+[[control_center.shortcuts]]
+type = "clipboard"
+
+[desktop_widgets]
+schema_version = 1
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
+[shell]
+settings_show_advanced = true
+
+    [shell.panel]
+    launcher_categories = false
+    launcher_compact = true
+    transparency_mode = "glass"
+
+[theme]
+builtin = "Nord"
+
+    [theme.templates]
+    enable_builtin_templates = false
+    enable_community_templates = false
+
+[wallpaper]
+directory = "~/.config/hypr/images"
+
+    [wallpaper.default]
+    path = "/home/acquarum/.config/hypr/images/sunset-background.jpg"
+
+    [wallpaper.last]
+    path = "/home/acquarum/.config/hypr/images/sunset-background.jpg"
+
+    [wallpaper.monitors.Virtual-1]
+    path = "/home/acquarum/.config/hypr/images/sunset-background.jpg"
+
+[widget.network]
+show_label = false
