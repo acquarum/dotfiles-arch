@@ -20,12 +20,20 @@ map('<CR>', 'o<Esc>', 'Add new line below without leaving normal mode')
 map('<S-CR>', 'O<Esc>', 'Add new line above without leaving normal mode')
 map('J', 'mzJ`z', 'Join lines without moving cursor')
 map('U', '<C-r>', 'Redo (undo undo)')
-map('>', '>gv', { desc = 'Increase indentation of selected text without leaving visual mode', mode = 'v' })
-map('<', '<gv', { desc = 'Decrease indentation of selected text without leaving visual mode', mode = 'v' })
+map(
+  '>',
+  '>gv',
+  { desc = 'Increase indentation of selected text without leaving visual mode', mode = 'v' }
+)
+map(
+  '<',
+  '<gv',
+  { desc = 'Decrease indentation of selected text without leaving visual mode', mode = 'v' }
+)
 map('<A-j>', '<cmd>m+<CR>==', 'Move line down')
 map('<A-k>', '<cmd>m-2<CR>==', 'Move line up')
-map('<A-j>', "<cmd>m '>+1<CR>gv=gv", { desc = 'Move selection down', mode = 'v' })
-map('<A-k>', "<cmd>m '<-2<CR>gv=gv", { desc = 'Move selection up', mode = 'v' })
+map('<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move selection down', mode = 'v' })
+map('<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move selection up', mode = 'v' })
 map('x', '"_x', 'Delete single character without copying into register')
 map('p', '"_dP', { desc = 'Paste without replacing yanked text', mode = 'v' })
 map('<leader>p', 'p', { desc = 'Paste and repace yanked text', mode = 'v' })
@@ -41,6 +49,10 @@ map('<leader>\\', '<C-w>v', 'Split window vertically')
 map('<leader>-', '<C-w>s', 'Split window horizontally')
 map('<leader>=', '<C-w>=', 'Resize split windows to be of equal width and height')
 map('<leader>wq', '<cmd>close<CR>', 'Close the current window')
+map('<leader>to', '<cmd>tab split<CR>', 'Open new tabpage on current buffer')
+map('<leader>tq', '<cmd>tabc<CR>', 'Close current tabpage')
+map('<leader>tn', '<cmd>tabn<CR>', 'Go to next tabpage')
+map('<leader>tp', '<cmd>tabp<CR>', 'Go to previous tabpage')
 map('<C-A-k>', '<cmd>resize -2<CR>')
 map('<C-A-j>', '<cmd>resize +2<CR>')
 map('<C-A-h>', '<cmd>vertical resize -2<CR>')
@@ -59,5 +71,9 @@ map('<leader>u', '<cmd>Undotree<CR>', 'Open or close Undotree')
 
 -- External plugins
 
-map('<leader>vps', function() vim.pack.update(nil, { offline = true }) end, 'Inspect installed packages and pending updates')
+map(
+  '<leader>vps',
+  function() vim.pack.update(nil, { offline = true }) end,
+  'Inspect installed packages and pending updates'
+)
 map('<leader>vpu', vim.pack.update, 'Update all packages')

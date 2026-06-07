@@ -1,27 +1,8 @@
+--------------------------
+----- GENERAL CONFIG -----
+--------------------------
+
 local general_config = vim.api.nvim_create_augroup('general_config', { clear = true })
-
----@param name string
----@param command string | table
----@param path string
-local function run_build(name, command, path)
-  local cmd
-  if type(command) == 'string' then
-    cmd = { command }
-  else
-    cmd = command
-  end
-
-  local result = vim.system(cmd, { cwd = path }):wait()
-  if result.code ~= 0 then
-    local stderr = result.stderr or ''
-    local stdout = result.stdout or ''
-    local output = stderr ~= '' and stderr or stdout
-    if output == '' then
-      output = 'No output from build command.'
-    end
-    vim.notify(('Build failed for %s:\n%s'):format(name, output), vim.log.levels.ERROR)
-  end
-end
 
 -- Highlight when yanking text
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -51,11 +32,13 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
-local install_hooks = vim.api.nvim_create_augroup('install_hooks', { clear = true })
+-------------------------
+----- INSTALL HOOKS -----
+-------------------------
 
 -- Define install and update hooks
 vim.api.nvim_create_autocmd('PackChanged', {
-  group = install_hooks,
+  group = vim.api.nvim_create_augroup('install_hooks', { clear = true }),
   callback = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind
     if kind ~= 'install' and kind ~= 'update' then
@@ -66,11 +49,11 @@ vim.api.nvim_create_autocmd('PackChanged', {
       if not ev.data.active then
         vim.cmd.packadd 'nvim-treesitter'
       end
-      vim.cmd('TSUpdate')
+      vim.cmd 'TSUpdate'
     end
 
     if name == 'telescope-fzf-native' then
-      run_build(name, { 'make' }, ev.data.path)
+      require('core.helpers').run_build(name, { 'make' }, ev.data.path)
     end
   end,
 })

@@ -19,10 +19,12 @@ require('telescope').setup {
       file_ignore_patterns = { '^node_modules/', '^.git/', '^.venv/' },
       hidden = true,
       follow = true,
+      no_ignore = true,
     },
     live_grep = {
       file_ignore_patterns = { '^node_modules/', '^.git/', '^.venv/' },
       additional_args = { '--hidden', '--follow' },
+      no_ignore = true,
     },
   },
   extensions = {
@@ -50,10 +52,26 @@ local builtin = require 'telescope.builtin'
 map('<leader>sh', builtin.help_tags, { desc = 'Telescope: [s]earch [h]elp', silent = false })
 map('<leader>sk', builtin.keymaps, { desc = 'Telescope: [s]earch [k]eymaps', silent = false })
 map('<leader>sf', builtin.find_files, { desc = 'Telescope: [s]earch [f]iles', silent = false })
-map('<leader>sp', builtin.builtin, { desc = 'Telescope: [s]earch Telescope built-in [p]ickers', silent = false })
-map('<leader>fw', builtin.grep_string, { desc = 'Telescope: [f]ind current [w]ord', silent = false })
-map('<leader>lg', builtin.live_grep, { desc = 'Telescope: [l]ive [g]rep workspace files', silent = false })
-map('<leader>sd', builtin.diagnostics, { desc = 'Telescope: [s]earch [d]iagnostics', silent = false })
+map(
+  '<leader>sp',
+  builtin.builtin,
+  { desc = 'Telescope: [s]earch Telescope built-in [p]ickers', silent = false }
+)
+map(
+  '<leader>fw',
+  builtin.grep_string,
+  { desc = 'Telescope: [f]ind current [w]ord', silent = false }
+)
+map(
+  '<leader>lg',
+  builtin.live_grep,
+  { desc = 'Telescope: [l]ive [g]rep workspace files', silent = false }
+)
+map(
+  '<leader>sd',
+  builtin.diagnostics,
+  { desc = 'Telescope: [s]earch [d]iagnostics', silent = false }
+)
 map('<leader>rf', builtin.oldfiles, { desc = 'Telescope: [r]ecent [f]iles', silent = false })
 map('<leader>sc', builtin.commands, { desc = 'Telescope: [s]earch [c]ommands', silent = false })
 map('<leader>of', builtin.buffers, { desc = 'Telescope: list [o]pen [f]iles', silent = false })
@@ -66,38 +84,66 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local buf = event.buf
 
     -- Find references for the word under your cursor.
-    map('grr', builtin.lsp_references, { buffer = buf, desc = 'Telescope: [g]oto [r]eferences', silent = false })
+    map(
+      'grr',
+      builtin.lsp_references,
+      { buffer = buf, desc = 'Telescope: [g]oto [r]eferences', silent = false }
+    )
 
     -- Jump to the implementation of the word under your cursor.
     -- Useful when your language has ways of declaring types without an actual implementation.
-    map('gri', builtin.lsp_implementations, { buffer = buf, desc = 'Telescope: [g]oto [i]mplementation', silent = false })
+    map(
+      'gri',
+      builtin.lsp_implementations,
+      { buffer = buf, desc = 'Telescope: [g]oto [i]mplementation', silent = false }
+    )
 
     -- Jump to the definition of the word under your cursor.
     -- This is where a variable was first declared, or where a function is defined, etc.
     -- To jump back, press <C-t>.
-    map('grd', builtin.lsp_definitions, { buffer = buf, desc = 'Telescope: [g]oto [d]efinition', silent = false })
+    map(
+      'grd',
+      builtin.lsp_definitions,
+      { buffer = buf, desc = 'Telescope: [g]oto [d]efinition', silent = false }
+    )
 
     -- Fuzzy find all the symbols in your current document.
     -- Symbols are things like variables, functions, types, etc.
-    map('gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Telescope: open Document Symbols', silent = false })
+    map(
+      'gO',
+      builtin.lsp_document_symbols,
+      { buffer = buf, desc = 'Telescope: open Document Symbols', silent = false }
+    )
 
     -- Fuzzy find all the symbols in your current workspace.
     -- Similar to document symbols, except searches over your entire project.
-    map('gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Telescope: open [w]orkspace Symbols', silent = false })
+    map(
+      'gW',
+      builtin.lsp_dynamic_workspace_symbols,
+      { buffer = buf, desc = 'Telescope: open [w]orkspace Symbols', silent = false }
+    )
 
     -- Jump to the type of the word under your cursor.
     -- Useful when you're not sure what type a variable is and you want to see
     -- the definition of its *type*, not where it was *defined*.
-    map('grt', builtin.lsp_type_definitions, { buffer = buf, desc = 'Telescope: [g]oto [t]ype Definition', silent = false })
+    map(
+      'grt',
+      builtin.lsp_type_definitions,
+      { buffer = buf, desc = 'Telescope: [g]oto [t]ype Definition', silent = false }
+    )
   end,
 })
 
 -- Search through linux man pages
-map('<leader>sm', function()
-  builtin.man_pages {
-    sections = { 'ALL' },
-  }
-end, { desc = 'Telescope: [s]earch [m]an pages', silent = false })
+map(
+  '<leader>sm',
+  function()
+    builtin.man_pages {
+      sections = { 'ALL' },
+    }
+  end,
+  { desc = 'Telescope: [s]earch [m]an pages', silent = false }
+)
 
 -- Slightly advanced example of overriding default behavior and theme
 map('<leader>/', function()
@@ -122,4 +168,8 @@ map(
 )
 
 -- Shortcut for searching your Neovim configuration files
-map('<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = 'Telescope: [s]earch [n]eovim files', silent = false })
+map(
+  '<leader>sn',
+  function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end,
+  { desc = 'Telescope: [s]earch [n]eovim files', silent = false }
+)
