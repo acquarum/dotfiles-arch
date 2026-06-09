@@ -11,11 +11,9 @@ dot_dir=$(realpath "$(dirname "$0")")
 
 cd "$dot_dir"
 
-home_dir="/home/acquarum"
-
 # Install directories
-config_dir="$home_dir/.config"
-aur_dir=$home_dir/aur
+config_dir="$HOME/.config"
+aur_dir=$HOME/aur
 
 zsh_dir="$config_dir/zsh"
 alacritty_dir="$config_dir/alacritty"
@@ -24,6 +22,7 @@ tmux_dir="$config_dir/tmux"
 nvim_dir="$config_dir/nvim"
 vim_dir="$config_dir/vim"
 hypr_dir="$config_dir/hypr"
+yazi_dir="$config_dir/yazi"
 
 ohmyzsh_dir="$zsh_dir/oh-my-zsh"
 ohmyzsh_custom="$ohmyzsh_dir/custom"
@@ -74,19 +73,21 @@ mount-point = /dev/zram0
 	systemctl daemon-reload
 	systemctl start systemd-zram-setup@zram0.service
 
+	mkdir -p "$XDG_BIN_HOME"
+
 	##########################
 	### INSTALL MAIN TOOLS ###
 	##########################
 
 	# Create the symlinks to the configuration files
-	mkdir -p "${zsh_dir}" "${alacritty_dir}" "${git_dir}" "${tmux_dir}" \
-		"${nvim_dir}" "${vim_dir}" "${hypr_dir}"
+	mkdir -p "$zsh_dir" "$alacritty_dir" "$git_dir" "$tmux_dir" \
+		"$nvim_dir" "$vim_dir" "$hypr_dir" "$yazi_dir"
 	stow .
 
 	##### PARU AUR HELPER #####
-	mkdir -p $aur_dir
-	git clone https://aur.archlinux.org/paru.git --depth 1 $aur_dir/paru
-	(cd $aur_dir/paru && makepkg -si)
+	mkdir -p "$aur_dir"
+	git clone https://aur.archlinux.org/paru.git --depth 1 "$aur_dir/paru"
+	(cd "$aur_dir/paru" && makepkg -si)
 
 	##### KMSCON #####
 	sudo pacman --needed -S kmscon
@@ -123,6 +124,17 @@ mount-point = /dev/zram0
 
 	##### NOCTALIA #####
 	paru -S noctalia-git
+
+	##### UFW #####
+	sudo pacman -S --needed ufw
+	sudo systemctl enable ufw.service
+	sudo ufw default deny incoming
+	sudo ufw default allow outgoing
+	sudo ufw allow ssh
+	sudo ufw enable
+
+	##### YAZI #####
+	sudo pacman -S --needed yazi 7zip jq fd ripgrep fzf zoxide
 
 	##### GIT #####
 	ssh-keygen -t ed25519 -C "edoardo980@gmail.com" -f "$HOME/.ssh/id_ed25519" -N "" -q
