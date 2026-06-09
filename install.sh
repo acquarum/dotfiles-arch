@@ -136,6 +136,9 @@ mount-point = /dev/zram0
 	##### YAZI #####
 	sudo pacman -S --needed yazi 7zip jq fd ripgrep fzf zoxide
 
+	##### PINTA #####
+	paru -S pinta
+
 	##### GIT #####
 	ssh-keygen -t ed25519 -C "edoardo980@gmail.com" -f "$HOME/.ssh/id_ed25519" -N "" -q
 	eval "$(ssh-agent)"
