@@ -45,12 +45,6 @@ main() {
 	### DEVICE CONFIGURATION ###
 	############################
 
-	# Install timeshift to create snapshots
-	sudo pacman --needed -S timeshift
-
-	# Create a BEFORE snapshot
-	sudo timeshift --create --comment "Before configuration" --tags D
-
 	# Install base packages
 	sudo pacman --needed -S curl wget stow gzip unzip tar xz xz-utils make gcc openssh which locate \
 		nftables networkmanager bluez bluez-utils base-devel man-db man-pages texinfo acpid \
@@ -204,9 +198,6 @@ mount-point = /dev/zram0
 
 	##### VIM #####
 	sudo pacman --needed -S vim
-
-	# Create an AFTER snapshot
-	sudo timeshift --create --comment "After configuration" --tags D
 
 	##### FINISH #####
 	echo "Add this key to your GitHub account:"
