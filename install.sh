@@ -13,7 +13,8 @@ cd "$dot_dir"
 
 # Install directories
 config_dir="$HOME/.config"
-aur_dir=$HOME/aur
+aur_dir="$HOME/aur"
+data_dir="$HOME/.local/share"
 
 zsh_dir="$config_dir/zsh"
 alacritty_dir="$config_dir/alacritty"
@@ -23,6 +24,8 @@ nvim_dir="$config_dir/nvim"
 vim_dir="$config_dir/vim"
 hypr_dir="$config_dir/hypr"
 yazi_dir="$config_dir/yazi"
+gtk3_dir="$config_dir/gtk-3.0"
+gtk4_dir="$config_dir/gtk-4.0"
 
 ohmyzsh_dir="$zsh_dir/oh-my-zsh"
 ohmyzsh_custom="$ohmyzsh_dir/custom"
@@ -30,8 +33,8 @@ ohmyzsh_themes="$ohmyzsh_custom/themes"
 ohmyzsh_plugins="$ohmyzsh_custom/plugins"
 
 # Environmental variables
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CONFIG_HOME="$config_dir"
+export XDG_DATA_HOME="$data_dir"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_BIN_HOME="$HOME/.local/bin"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -54,7 +57,7 @@ main() {
 		pipewire wireplumber wl-clipboard
 
 	# Install useful packages
-	sudo pacman --needed -S network-manager-applet blueman chromium nwg-look noto-fonts noto-fonts-cjk \
+	sudo pacman --needed -S network-manager-applet blueman chromium noto-fonts noto-fonts-cjk \
 		noto-fonts-emoji noto-fonts-extra pacman-contrib
 
 	sudo systemctl enable NetworkManager
@@ -81,7 +84,7 @@ mount-point = /dev/zram0
 
 	# Create the symlinks to the configuration files
 	mkdir -p "$zsh_dir" "$alacritty_dir" "$git_dir" "$tmux_dir" \
-		"$nvim_dir" "$vim_dir" "$hypr_dir" "$yazi_dir"
+		"$nvim_dir" "$vim_dir" "$hypr_dir" "$yazi_dir" "$gtk3_dir" "$gtk4_dir"
 	stow .
 
 	##### PARU AUR HELPER #####
@@ -102,28 +105,45 @@ mount-point = /dev/zram0
 	sudo mv /etc/ly/config.ini /etc/ly/config.ini.default
 	sudo ln -s "$dot_dir/resources/ly/config.ini" /etc/ly/config.ini
 
-	##### GRUB THEME #####
-	# unzip ./resources/grub-dark-matter.zip -d ./resources/grub-dark-matter
-	# (cd ./resources/grub-dark-matter && sudo python3 darkmatter-theme.py -i)
-
-	##### GTK THEME #####
-	mkdir -p "$XDG_DATA_HOME/themes"
-	tar -xJvf ./resources/Nordic-darker.tar.xz -C "$XDG_DATA_HOME/themes/"
-
-	##### CURSOR THEME #####
-	mkdir -p "$XDG_DATA_HOME/icons"
-	tar -xJvf ./resources/macOS.tar.xz -C "$XDG_DATA_HOME/icons/"
-
-	##### ICON THEME #####
-	wget -qO- https://git.io/papirus-icon-theme-install | env DESTDIR="$XDG_DATA_HOME/icons" sh
-
 	##### HYPRLAND #####
 	sudo pacman --needed -S qt5-wayland qt6-wayland hyprland xdg-desktop-portal-hyprland \
 		xdg-desktop-portal-gtk hyprpolkitagent hyprshot hyprshutdown hyprwcenter hyprsysteminfo \
 		cliphist
 
 	##### NOCTALIA #####
+	sudo pacman -S --needed meson gcc just \
+		wayland wayland-protocols \
+		libglvnd freetype2 fontconfig \
+		cairo pango harfbuzz \
+		libxkbcommon glib2 \
+		sdbus-cpp libpipewire polkit \
+		pam curl libwebp librsvg \
+		libqalculate libxml2 \
+		jemalloc
 	paru -S noctalia-git
+
+	##### GRUB THEME #####
+	# unzip ./resources/grub-dark-matter.zip -d ./resources/grub-dark-matter
+	# (cd ./resources/grub-dark-matter && sudo python3 darkmatter-theme.py -i)
+	
+	##### CURSOR THEME #####
+	mkdir -p "$data_dir/icons"
+	tar -xJvf ./resources/macOS.tar.xz -C "$data_dir/icons/"
+	rm "$data_dir/icons/LICENSE"
+	ln -s "$data_dir/icons/macOS" "$data_dir/icons/default" 
+
+	##### ICON THEME #####
+	sudo pacman -S --needed hicolor-icon-theme
+	sudo pacman -S --needed papirus-icon-theme
+
+	##### GTK THEME #####
+	mkdir -p "$data_dir/themes"
+	tar -xJvf ./resources/Nordic-darker.tar.xz -C "$data_dir/themes/"
+	ln -s "$data_dir/themes/Nordic-darker-v40/assets" "$config_dir/"
+	ln -s "$data_dir/themes/Nordic-darker-v40/gtk-4.0/gtk-dark.css" "$config_dir/gtk-4.0/"
+	ln -s "$data_dir/themes/Nordic-darker-v40/gtk-4.0/gtk.css" "$config_dir/gtk-4.0/"
+	ln -s "$data_dir/themes/Nordic-darker-v40/gtk-3.0/gtk-dark.css" "$config_dir/gtk-3.0/"
+	ln -s "$data_dir/themes/Nordic-darker-v40/gtk-3.0/gtk.css" "$config_dir/gtk-3.0/"
 
 	##### UFW #####
 	sudo pacman -S --needed ufw
@@ -135,9 +155,6 @@ mount-point = /dev/zram0
 
 	##### YAZI #####
 	sudo pacman -S --needed yazi 7zip jq fd ripgrep fzf zoxide
-
-	##### PINTA #####
-	paru -S pinta
 
 	##### GIT #####
 	ssh-keygen -t ed25519 -C "edoardo980@gmail.com" -f "$HOME/.ssh/id_ed25519" -N "" -q
