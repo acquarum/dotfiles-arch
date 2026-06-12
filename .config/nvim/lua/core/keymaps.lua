@@ -61,6 +61,28 @@ map('<C-k>', '<C-w>k', 'Navigate to split window above')
 map('<C-j>', '<C-w>j', 'Navigate to split window below')
 map('<C-h>', '<C-w>h', 'Navigate to split window to the left')
 map('<C-l>', '<C-w>l', 'Navigate to split window to the right')
+map(
+  '<C-k>',
+  [[<C-\><C-N><C-w>k]],
+  { desc = 'Insert/terminal mode: navigate to split window above', mode = { 'i', 't' } }
+)
+map(
+  '<C-j>',
+  [[<C-\><C-N><C-w>j]],
+  { desc = 'Insert/terminal mode: navigate to split window below', mode = { 'i', 't' } }
+)
+map(
+  '<C-h>',
+  [[<C-\><C-N><C-w>h]],
+  { desc = 'Insert/terminal mode: navigate to split window to the left', mode = { 'i', 't' } }
+)
+map(
+  '<C-l>',
+  [[<C-\><C-N><C-w>l]],
+  { desc = 'Insert/terminal mode: navigate to split window to the right', mode = { 'i', 't' } }
+)
+map('<ESC>', [[<C-\><C-n>]], { desc = 'Terminal mode: return to normal mode', mode = 't' })
+map('<leader>tt', '<cmd>wincmd s | terminal<CR>', 'Open terminal in current buffer')
 
 -- Diagnostic keymaps
 map('<leader>d', vim.diagnostic.open_float, 'Open floating [D]iagnostics')
