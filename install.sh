@@ -21,7 +21,6 @@ alacritty_dir="$config_dir/alacritty"
 git_dir="$config_dir/git"
 tmux_dir="$config_dir/tmux"
 nvim_dir="$config_dir/nvim"
-vim_dir="$config_dir/vim"
 hypr_dir="$config_dir/hypr"
 yazi_dir="$config_dir/yazi"
 gtk3_dir="$config_dir/gtk-3.0"
@@ -46,16 +45,13 @@ main() {
 	############################
 
 	# Install base packages
-	sudo pacman --needed -S curl wget stow gzip unzip tar xz xz-utils make gcc openssh which locate \
-		nftables networkmanager bluez bluez-utils base-devel man-db man-pages texinfo acpid \
-		pipewire wireplumber wl-clipboard
+	sudo pacman --needed -S curl wget stow gzip unzip tar xz make gcc locate \
+		nftables bluez bluez-utils man-db man-pages texinfo acpid
 
 	# Install useful packages
-	sudo pacman --needed -S network-manager-applet blueman chromium noto-fonts noto-fonts-cjk \
+	sudo pacman --needed -S noto-fonts noto-fonts-cjk \
 		noto-fonts-emoji noto-fonts-extra pacman-contrib
 
-	sudo systemctl enable NetworkManager
-	sudo systemctl enable sshd
 	sudo systemctl enable bluetooth
 	sudo systemctl enable acpid
 
@@ -67,10 +63,12 @@ compression-algorithm = zstd
 swap-priority = 100
 mount-point = /dev/zram0
 " | sudo tee /etc/systemd/zram-generator.conf
-	systemctl daemon-reload
-	systemctl start systemd-zram-setup@zram0.service
+	sudo systemctl daemon-reload
+	sudo systemctl start systemd-zram-setup@zram0.service
 
-	mkdir -p "$XDG_BIN_HOME"
+	# Create directories
+	mkdir -p "$XDG_BIN_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_CACHE_HOME" \
+		"$XDG_STATE_HOME" "$aur_dir"
 
 	##########################
 	### INSTALL MAIN TOOLS ###
@@ -78,11 +76,10 @@ mount-point = /dev/zram0
 
 	# Create the symlinks to the configuration files
 	mkdir -p "$zsh_dir" "$alacritty_dir" "$git_dir" "$tmux_dir" \
-		"$nvim_dir" "$vim_dir" "$hypr_dir" "$yazi_dir" "$gtk3_dir" "$gtk4_dir"
+		"$nvim_dir" "$hypr_dir" "$yazi_dir" "$gtk3_dir" "$gtk4_dir"
 	stow .
 
 	##### PARU AUR HELPER #####
-	mkdir -p "$aur_dir"
 	git clone https://aur.archlinux.org/paru.git --depth 1 "$aur_dir/paru"
 	(cd "$aur_dir/paru" && makepkg -si)
 
@@ -100,7 +97,7 @@ mount-point = /dev/zram0
 	sudo ln -s "$dot_dir/resources/ly/config.ini" /etc/ly/config.ini
 
 	##### HYPRLAND #####
-	sudo pacman --needed -S qt5-wayland qt6-wayland hyprland xdg-desktop-portal-hyprland \
+	sudo pacman --needed -S pipewire wireplumber wl-clipboard qt5-wayland qt6-wayland hyprland xdg-desktop-portal-hyprland \
 		xdg-desktop-portal-gtk hyprpolkitagent hyprshot hyprshutdown hyprwcenter hyprsysteminfo \
 		cliphist
 
@@ -117,14 +114,14 @@ mount-point = /dev/zram0
 	paru -S noctalia-git
 
 	##### GRUB THEME #####
-	# unzip ./resources/grub-dark-matter.zip -d ./resources/grub-dark-matter
-	# (cd ./resources/grub-dark-matter && sudo python3 darkmatter-theme.py -i)
-	
+	unzip ./resources/grub-dark-matter.zip -d ./resources/grub-dark-matter
+	(cd ./resources/grub-dark-matter && sudo python3 darkmatter-theme.py -i)
+
 	##### CURSOR THEME #####
 	mkdir -p "$data_dir/icons"
 	tar -xJvf ./resources/macOS.tar.xz -C "$data_dir/icons/"
 	rm "$data_dir/icons/LICENSE"
-	ln -s "$data_dir/icons/macOS" "$data_dir/icons/default" 
+	ln -s "$data_dir/icons/macOS" "$data_dir/icons/default"
 
 	##### ICON THEME #####
 	sudo pacman -S --needed hicolor-icon-theme
@@ -156,38 +153,32 @@ mount-point = /dev/zram0
 	ssh-add ~/.ssh/id_ed25519
 	git remote set-url origin git@github.com:BlinDzOrE/dotfiles-arch.git
 
-	##### ZSH #####
-	sudo pacman --needed -S zsh
-
 	# oh-my-zsh
-	git clone https://github.com/ohmyzsh/ohmyzsh.git --depth 1 "${ohmyzsh_dir}"
-
-	# Make zsh your login shell
-	chsh -s "$(which zsh)"
+	git clone https://github.com/ohmyzsh/ohmyzsh.git --depth 1 "$ohmyzsh_dir"
 
 	# powerlevel10k
 	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
-		"${ohmyzsh_themes}/powerlevel10k"
+		"$ohmyzsh_themes/powerlevel10k"
 
 	# zsh-completions
 	git clone https://github.com/zsh-users/zsh-completions.git --depth 1 \
-		"${ohmyzsh_plugins}/zsh-completions"
+		"$ohmyzsh_plugins/zsh-completions"
 
 	# zsh-autosuggestions
 	git clone https://github.com/zsh-users/zsh-autosuggestions --depth 1 \
-		"${ohmyzsh_plugins}/zsh-autosuggestions"
+		"$ohmyzsh_plugins/zsh-autosuggestions"
 
 	# zsh-syntax-highlighting
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git --depth 1 \
-		"${ohmyzsh_plugins}/zsh-syntax-highlighting"
+		"$ohmyzsh_plugins/zsh-syntax-highlighting"
 
 	##### TMUX #####
 	sudo pacman --needed -S tmux
 
 	# Instal tpm (tmux-plugin-manager)
-	mkdir "${tmux_dir}/plugins"
-	git clone --depth 1 https://github.com/tmux-plugins/tpm "${tmux_dir}/plugins/tpm"
-	bash -c "${tmux_dir}/plugins/tpm/bin/install_plugins"
+	mkdir "$tmux_dir/plugins"
+	git clone --depth 1 https://github.com/tmux-plugins/tpm "$tmux_dir/plugins/tpm"
+	bash -c "$tmux_dir/plugins/tpm/bin/install_plugins"
 
 	##### ALACRITTY #####
 	sudo pacman --needed -S alacritty
@@ -195,9 +186,6 @@ mount-point = /dev/zram0
 	##### NEOVIM #####
 	sudo pacman --needed -S nvim clang fd ripgrep tree-sitter-cli wl-clipboard ttf-jetbrains-mono-nerd \
 		shellcheck shfmt bash-language-server lua-language-server stylua
-
-	##### VIM #####
-	sudo pacman --needed -S vim
 
 	##### FINISH #####
 	echo "Add this key to your GitHub account:"
