@@ -41,7 +41,7 @@ main() {
 	############################
 
 	# Install base packages
-	sudo pacman --needed -S curl wget stow gzip unzip tar xz make gcc locate \
+	sudo pacman --needed -S curl wget stow gzip zip unzip tar xz make gcc locate \
 		nftables bluez bluez-utils man-db man-pages texinfo acpid
 
 	# Install useful packages
