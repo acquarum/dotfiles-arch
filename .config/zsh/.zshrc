@@ -62,4 +62,6 @@ source "$ZSH/oh-my-zsh.sh"
 
 alias ll="ls -lAhv --group-directories-first"
 alias sunvim="sudoedit"
+alias td="tmux new-session -A -s default"
+alias tn="tmux new-session -A -s"
 
