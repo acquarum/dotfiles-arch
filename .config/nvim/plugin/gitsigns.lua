@@ -94,7 +94,7 @@ require('gitsigns').setup {
 
     -- Toggles
     map('<leader>tb', gitsigns.toggle_current_line_blame, 'Gitsigns: toggle blame for current line')
-    map('<leader>tw', gitsigns.toggle_word_diff)
+    map('<leader>td', gitsigns.toggle_word_diff,  'Gitsigns: toggle word diff highlighting')
 
     -- Text object
     map('ih', gitsigns.select_hunk, { mode = { 'o', 'x' }, desc = 'Gitsigns: select hunk' })

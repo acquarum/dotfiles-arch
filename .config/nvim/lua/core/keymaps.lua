@@ -82,7 +82,8 @@ map(
   { desc = 'Insert/terminal mode: navigate to split window to the right', mode = { 'i', 't' } }
 )
 map('<ESC>', [[<C-\><C-n>]], { desc = 'Terminal mode: return to normal mode', mode = 't' })
-map('<leader>tt', '<cmd>wincmd s | terminal<CR>', 'Open terminal in current buffer')
+map('<leader>ts', '<cmd>wincmd s | terminal<CR>', 'Open terminal in split window')
+map('<leader>tw', '<cmd>terminal<CR>', 'Open terminal in current window')
 
 -- Diagnostic keymaps
 map('<leader>d', vim.diagnostic.open_float, 'Open floating [D]iagnostics')
