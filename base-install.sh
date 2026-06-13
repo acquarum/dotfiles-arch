@@ -130,7 +130,7 @@ mount-point = /dev/zram0
 	bash -c "$tmux_dir/plugins/tpm/bin/install_plugins"
 
 	##### NEOVIM #####
-	sudo pacman --needed -S nvim clang fd ripgrep tree-sitter-cli wl-clipboard ttf-jetbrains-mono-nerd \
+	sudo pacman --needed -S nvim clang fd ripgrep tree-sitter-cli ttf-jetbrains-mono-nerd \
 		shellcheck shfmt bash-language-server lua-language-server stylua
 
 	##### GRUB THEME #####
