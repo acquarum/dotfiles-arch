@@ -22,7 +22,8 @@ _darcs
 ^/LICENSE.*
 ^/COPYING
 
-^/install.sh
+^/base-install.sh
+^/graphical-install.sh
 
 ^/resources
 
