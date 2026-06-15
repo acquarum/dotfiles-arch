@@ -44,7 +44,7 @@ main() {
 	############################
 
 	# Configure snapper
-	sudo pacman -S --needed snapper snap-pac inotify-tools
+	sudo pacman -S --needed snapper snap-pac inotify-tools arch-install-scripts
 	sudo umount /.snapshots
 	sudo rm -rf /.snapshots
 	sudo snapper -c root create-config /
