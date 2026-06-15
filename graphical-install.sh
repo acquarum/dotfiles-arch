@@ -13,7 +13,7 @@ cd "$dot_dir"
 
 # Install directories
 alacritty_dir="$XDG_CONFIG_HOME/alacritty"
-hypr_dir="$XDG_CONFIG_HOME/hypr"
+niri_dir="$XDG_CONFIG_HOME/niri"
 gtk3_dir="$XDG_CONFIG_HOME/gtk-3.0"
 gtk4_dir="$XDG_CONFIG_HOME/gtk-4.0"
 
@@ -24,7 +24,7 @@ main() {
 	##########################
 
 	# Create the symlinks to the configuration files
-	mkdir -p "$alacritty_dir" "$hypr_dir" "$gtk3_dir" "$gtk4_dir"
+	mkdir -p "$alacritty_dir" "$niri_dir" "$gtk3_dir" "$gtk4_dir"
 	stow .
 
 	##### LY DISPLAY MANAGER #####
@@ -34,22 +34,14 @@ main() {
 	sudo mv /etc/ly/config.ini /etc/ly/config.ini.default
 	sudo ln -s "$dot_dir/resources/ly/config.ini" /etc/ly/config.ini
 
-	##### HYPRLAND #####
-	sudo pacman --needed -S pipewire wireplumber wl-clipboard qt5-wayland qt6-wayland hyprland xdg-desktop-portal-hyprland \
-		xdg-desktop-portal-gtk hyprpolkitagent hyprshot hyprshutdown hyprwcenter hyprsysteminfo \
-		cliphist
+	##### NIRI #####
+	sudo pacman -S --needed niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk \
+		gnome-keyring pipewire wireplumber wl-clipboard
 
-	##### NOCTALIA #####
-	sudo pacman -S --needed meson gcc just \
-		wayland wayland-protocols \
-		libglvnd freetype2 fontconfig \
-		cairo pango harfbuzz \
-		libxkbcommon glib2 \
-		sdbus-cpp libpipewire polkit \
-		pam curl libwebp librsvg \
-		libqalculate libxml2 \
-		jemalloc
-	paru -S noctalia-git
+	##### DMS SHELL #####
+	sudo pacman -S --needed quickshell dms-shell-niri cava qt6-multimedia-ffmpeg cliphist \
+		dgop dsearch
+	systemctl --user add-wants niri.service dms
 
 	##### ALACRITTY #####
 	sudo pacman --needed -S alacritty
