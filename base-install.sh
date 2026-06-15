@@ -11,6 +11,9 @@ dot_dir=$(realpath "$(dirname "$0")")
 
 cd "$dot_dir"
 
+# Device of the top level btrfs subvolume
+btrfs_dev="/dev/vda2"
+
 # Install directories
 config_dir="$HOME/.config"
 aur_dir="$HOME/aur"
@@ -40,16 +43,40 @@ main() {
 	### DEVICE CONFIGURATION ###
 	############################
 
+	# Configure snapper
+	sudo pacman -S --needed snapper snap-pac inotify-tools
+	sudo umount /.snapshots
+	sudo rm -rf /.snapshots
+	sudo snapper -c root create-config /
+	sudo btrfs subvolume delete /.snapshots
+	sudo mount --mkdir -o noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@snapshots $btrfs_dev /.snapshots
+	sudo chmod 750 /.snapshots
+	sudo mv /etc/snapper/configs/root /etc/snapper/configs/root.default
+	sudo ln -s "$dot_dir/resources/snapper/root" /etc/snapper/configs/root
+	sudo systemctl enable --now grub-btrfsd.service
+	sudo systemctl enable --now snapper-timeline.timer
+	sudo systemctl enable --now snapper-cleanup.timer 
+
+	# Setup mirrors with reflector
+	sudo pacman -S --needed reflector
+	sudo reflector --protocol https --age 12 --latest 50 --fastest 10 --sort rate --save /etc/pacman.d/mirrorlist
+	sudo mv /etc/xdg/reflector/reflector.conf /etc/xdg/reflector/reflector.conf.default
+	sudo ln -s "$dot_dir/resources/reflector/reflector.conf" /etc/xdg/reflector/reflector.conf 
+	sudo systemctl enable reflector.timer
+
+	# Update mirror database
+	sudo pacman -Syyu
+
 	# Install base packages
 	sudo pacman --needed -S curl wget stow gzip zip unzip tar xz make gcc locate \
 		nftables bluez bluez-utils man-db man-pages texinfo acpid
+	echo "PRUNENAMES = \".snapshots\"" | sudo tee /etc/updatedb.conf
+	sudo systemctl enable bluetooth
+	sudo systemctl enable acpid
 
 	# Install useful packages
 	sudo pacman --needed -S noto-fonts noto-fonts-cjk noto-fonts-emoji \
 		noto-fonts-extra pacman-contrib
-
-	sudo systemctl enable bluetooth
-	sudo systemctl enable acpid
 
 	# Setup swap on zram
 	sudo pacman --needed -S zram-generator
@@ -139,6 +166,9 @@ mount-point = /dev/zram0
 	sudo mv /tmp/grub-dark-matter/darkmatter /boot/grub/themes/
 	echo GRUB_THEME=\"/boot/grub/themes/darkmatter/theme.txt\" | sudo tee -a /etc/default/grub 
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+	# Update locate database
+	sudo updatedb
 
 	##### FINISH #####
 	echo "Add this key to your GitHub account:"
