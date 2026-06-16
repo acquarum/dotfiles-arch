@@ -39,9 +39,9 @@ main() {
 		gnome-keyring pipewire wireplumber wl-clipboard
 
 	##### DMS SHELL #####
-	sudo pacman -S --needed quickshell dms-shell-niri cava qt6-multimedia-ffmpeg cliphist \
-		dgop dsearch
-	systemctl --user add-wants niri.service dms
+	sudo pacman -S --needed quickshell dms-shell-niri cava qt6-multimedia-ffmpeg cliphist dgop
+	paru -S dsearch-bin
+	# systemctl --user add-wants niri.service dms
 
 	##### ALACRITTY #####
 	sudo pacman --needed -S alacritty
