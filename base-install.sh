@@ -100,7 +100,7 @@ mount-point = /dev/zram0
 	# Create the symlinks to the configuration files
 	mkdir -p "$zsh_dir" "$git_dir" "$tmux_dir" "$nvim_dir" "$yazi_dir"
 	stow --ignore='.config/alacritty' --ignore='.config/niri' --ignore='.config/gtk-3.0' \
-		--ignore='.config/gtk-4.0' .
+		--ignore='.config/gtk-4.0' --ignore='.local' .
 
 	##### PARU AUR HELPER #####
 	git clone https://aur.archlinux.org/paru.git --depth 1 "$aur_dir/paru"
@@ -161,7 +161,7 @@ mount-point = /dev/zram0
 		shellcheck shfmt bash-language-server lua-language-server stylua
 
 	##### GRUB THEME #####
-	unzip ./resources/grub-dark-matter.zip -d /tmp/grub-dark-matter
+	unzip ./resources/themes/grub-dark-matter.zip -d /tmp/grub-dark-matter
 	sudo mkdir -p /boot/grub/themes
 	sudo mv /tmp/grub-dark-matter/darkmatter /boot/grub/themes/
 	echo GRUB_THEME=\"/boot/grub/themes/darkmatter/theme.txt\" | sudo tee -a /etc/default/grub 

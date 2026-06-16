@@ -16,6 +16,7 @@ alacritty_dir="$XDG_CONFIG_HOME/alacritty"
 niri_dir="$XDG_CONFIG_HOME/niri"
 gtk3_dir="$XDG_CONFIG_HOME/gtk-3.0"
 gtk4_dir="$XDG_CONFIG_HOME/gtk-4.0"
+bg_dir="$XDG_DATA_HOME/backgrounds"
 
 main() {
 
@@ -24,7 +25,7 @@ main() {
 	##########################
 
 	# Create the symlinks to the configuration files
-	mkdir -p "$alacritty_dir" "$niri_dir" "$gtk3_dir" "$gtk4_dir"
+	mkdir -p "$alacritty_dir" "$niri_dir" "$gtk3_dir" "$gtk4_dir" "$bg_dir"
 	stow .
 
 	##### LY DISPLAY MANAGER #####
@@ -41,14 +42,14 @@ main() {
 	##### DMS SHELL #####
 	sudo pacman -S --needed quickshell dms-shell-niri cava qt6-multimedia-ffmpeg cliphist dgop
 	paru -S dsearch-bin
-	# systemctl --user add-wants niri.service dms
+	systemctl --user add-wants niri.service dms
 
 	##### ALACRITTY #####
 	sudo pacman --needed -S alacritty
 
 	##### CURSOR THEME #####
 	mkdir -p "$XDG_DATA_HOME/icons"
-	tar -xJvf ./resources/macOS.tar.xz -C "$XDG_DATA_HOME/icons/"
+	tar -xJvf ./resources/themes/macOS.tar.xz -C "$XDG_DATA_HOME/icons/"
 	rm "$XDG_DATA_HOME/icons/LICENSE"
 	ln -s "$XDG_DATA_HOME/icons/macOS" "$XDG_DATA_HOME/icons/default"
 
@@ -57,13 +58,20 @@ main() {
 	sudo pacman -S --needed papirus-icon-theme
 
 	##### GTK THEME #####
+	sudo pacman -S --needed adw-gtk-theme
 	mkdir -p "$XDG_DATA_HOME/themes"
-	tar -xJvf ./resources/Nordic-darker.tar.xz -C "$XDG_DATA_HOME/themes/"
+	tar -xJvf ./resources/themes/Nordic-darker.tar.xz -C "$XDG_DATA_HOME/themes/"
 	ln -s "$XDG_DATA_HOME/themes/Nordic-darker-v40/assets" "$XDG_CONFIG_HOME/"
 	ln -s "$XDG_DATA_HOME/themes/Nordic-darker-v40/gtk-4.0/gtk-dark.css" "$XDG_CONFIG_HOME/gtk-4.0/"
 	ln -s "$XDG_DATA_HOME/themes/Nordic-darker-v40/gtk-4.0/gtk.css" "$XDG_CONFIG_HOME/gtk-4.0/"
 	ln -s "$XDG_DATA_HOME/themes/Nordic-darker-v40/gtk-3.0/gtk-dark.css" "$XDG_CONFIG_HOME/gtk-3.0/"
 	ln -s "$XDG_DATA_HOME/themes/Nordic-darker-v40/gtk-3.0/gtk.css" "$XDG_CONFIG_HOME/gtk-3.0/"
+
+	# Useful desktop apps
+	sudo pacman -S --needed firefox
+
+	# Update locate db
+	sudo updatedb
 }
 
 main "$@"
