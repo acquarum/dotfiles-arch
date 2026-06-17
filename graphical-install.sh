@@ -49,10 +49,13 @@ main() {
 	sudo pacman --needed -S alacritty
 
 	##### CURSOR THEME #####
-	mkdir -p "$XDG_DATA_HOME/icons"
-	tar -xJvf ./resources/themes/macOS.tar.xz -C "$XDG_DATA_HOME/icons/"
-	rm "$XDG_DATA_HOME/icons/LICENSE"
-	ln -s "$XDG_DATA_HOME/icons/macOS" "$XDG_DATA_HOME/icons/default"
+	sudo mkdir -p "/usr/share/icons/default"
+	sudo tar -xJvf ./resources/themes/macOS.tar.xz -C "/usr/share/icons/"
+	sudo rm "/usr/share/icons/LICENSE"
+	echo "
+[Icon Theme]
+Inherits=macOS
+" | sudo tee /usr/share/icons/default/index.theme
 
 	##### ICON THEME #####
 	sudo pacman -S --needed hicolor-icon-theme
