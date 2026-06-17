@@ -3,12 +3,22 @@
 // Find more information on the wiki:
 // https://niri-wm.github.io/niri/Configuration:-Window-Rules
 
-// Open the Firefox picture-in-picture player as floating by default.
+// Default floating windows
 window-rule {
+	// Open the Firefox picture-in-picture player as floating by default.
     // This app-id regular expression will work for both:
     // - host Firefox (app-id is "firefox")
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"org.quickshell$"#
+    match app-id=r#"com.danklinux.dms$"#
+    // match app-id="zoom"
+    // match app-id=r#"^org\.gnome\.Calculator$"#
+    // match app-id=r#"^gnome-calculator$"#
+    // match app-id=r#"^galculator$"#
+    // match app-id=r#"^blueman-manager$"#
+    // match app-id=r#"^org\.gnome\.Nautilus$"#
+    // match app-id=r#"^xdg-desktop-portal$"#
     open-floating true
 }
 
@@ -47,13 +57,8 @@ window-rule {
     draw-border-with-background false
 }
 
-window-rule {
-    match is-active=false
-    opacity 0.9
-}
+// window-rule {
+//     match is-active=false
+//     opacity 0.9
+// }
 
-// Open DMS windows as floating by default
-window-rule {
-    match app-id=r#"org.quickshell$"#
-    open-floating true
-}

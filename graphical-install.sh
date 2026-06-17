@@ -40,7 +40,8 @@ main() {
 		gnome-keyring pipewire wireplumber wl-clipboard
 
 	##### DMS SHELL #####
-	sudo pacman -S --needed quickshell dms-shell-niri cava qt6-multimedia-ffmpeg cliphist dgop
+	sudo pacman -S --needed quickshell dms-shell-niri cava qt6-multimedia-ffmpeg cliphist dgop \
+		power-profiles-daemon cups-pk-helper
 	paru -S dsearch-bin
 	systemctl --user add-wants niri.service dms
 
