@@ -39,11 +39,8 @@ main() {
 	sudo pacman -S --needed niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk \
 		gnome-keyring pipewire wireplumber wl-clipboard
 
-	##### DMS SHELL #####
-	sudo pacman -S --needed quickshell dms-shell-niri cava qt6-multimedia-ffmpeg cliphist dgop \
-		power-profiles-daemon cups-pk-helper
-	paru -S dsearch-bin
-	systemctl --user add-wants niri.service dms
+	# Previous snapshot: June 17 11 pm
+	##### NOCTALIA SHELL #####
 
 	##### ALACRITTY #####
 	sudo pacman --needed -S alacritty
@@ -62,7 +59,6 @@ Inherits=macOS
 	sudo pacman -S --needed papirus-icon-theme
 
 	##### GTK THEME #####
-	sudo pacman -S --needed adw-gtk-theme
 	mkdir -p "$XDG_DATA_HOME/themes"
 	tar -xJvf ./resources/themes/Nordic-darker.tar.xz -C "$XDG_DATA_HOME/themes/"
 	ln -s "$XDG_DATA_HOME/themes/Nordic-darker-v40/assets" "$XDG_CONFIG_HOME/"

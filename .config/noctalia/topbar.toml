@@ -1,0 +1,33 @@
+
+[bar.default]
+background_opacity = 0.6
+contact_shadow = true
+font_weight = 700
+margin_edge = 0
+margin_ends = 0
+radius = 0
+widget_spacing = 12
+scale = 1.0
+
+start = [ "workspaces", "active_window" ]
+center = [ "group:g1" ]
+end = [
+    "tray",
+    "ram",
+    "cpu",
+    "keyboard_layout",
+    "notifications",
+    "network",
+    "bluetooth",
+    "volume",
+    "brightness",
+    "battery"
+]
+
+[[bar.default.capsule_group]]
+fill = "surface_variant"
+id = "g1"
+members = [ "date", "clock" ]
+opacity = 0.0
+padding = 6.0
+

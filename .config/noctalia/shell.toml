@@ -1,0 +1,8 @@
+
+[shell]
+settings_show_advanced = true
+
+[shell.panel]
+launcher_categories = false
+launcher_compact = true
+transparency_mode = "glass"

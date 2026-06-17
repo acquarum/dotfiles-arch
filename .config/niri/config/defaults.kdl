@@ -14,7 +14,6 @@ gestures {
 }
 
 hotkey-overlay {
-    // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
     skip-at-startup
 	hide-not-bound
 }
@@ -23,19 +22,12 @@ debug {
     honor-xdg-activation-with-invalid-serial
 }
 
-// config-notification {
-//     disable-failed
-// }
+cursor {
+	xcursor-theme "macOS"
+	xcursor-size 24
+}
 
 clipboard {
     disable-primary
 }
 
-// These are the default values:
-/-blur {
-    // off
-    passes 3
-    offset 3
-    noise 0.02
-    saturation 1.5
-}

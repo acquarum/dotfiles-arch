@@ -4,75 +4,51 @@ binds {
     // in the end. To find an XKB name for a particular key, you may use a program
     // like wev.
     //
-    // "Mod" is a special modifier equal to Super when running on a TTY, and to Alt
-    // when running as a winit window.
-    //
-    // Most actions that you can bind here can also be invoked programmatically with
-    // `niri msg action do-something`.
+
+	Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Application Launchers
     Mod+Return hotkey-overlay-title="Open alacritty" { spawn "alacritty"; }
     Mod+Shift+Return hotkey-overlay-title="Open alacritty with default tmux session" { spawn "alacritty" "--command" "tmux" "new-session" "-A" "-s" "default"; }
     Mod+B hotkey-overlay-title="Open firefox" { spawn "firefox"; }
-	Mod+Space hotkey-overlay-title="Application Launcher" {
-		spawn "dms" "ipc" "call" "spotlight" "toggle";
-	}
-    Mod+Y hotkey-overlay-title="Clipboard Manager" {
-        spawn "dms" "ipc" "call" "clipboard" "toggle";
-    }
-    Mod+P hotkey-overlay-title="Task Manager" {
-        spawn "dms" "ipc" "call" "processlist" "focusOrToggle";
-    }
-    Mod+S hotkey-overlay-title="Settings" {
-        spawn "dms" "ipc" "call" "settings" "focusOrToggle";
-    }
-    Mod+N hotkey-overlay-title="Notification Center" {
-        spawn "dms" "ipc" "call" "notifications" "toggle";
-    }
-    Mod+W hotkey-overlay-title="Browse Wallpapers" {
-        spawn "dms" "ipc" "call" "dankdash" "wallpaper";
-    }
+	//    Mod+Y hotkey-overlay-title="Clipboard Manager" {
+	//        spawn "dms" "ipc" "call" "clipboard" "toggle";
+	//    }
+	//    Mod+P hotkey-overlay-title="Task Manager" {
+	//        spawn "dms" "ipc" "call" "processlist" "focusOrToggle";
+	//    }
+	//    Mod+N hotkey-overlay-title="Notification Center" {
+	//        spawn "dms" "ipc" "call" "notifications" "toggle";
+	//    }
+	//    Mod+W hotkey-overlay-title="Browse Wallpapers" {
+	//        spawn "dms" "ipc" "call" "dankdash" "wallpaper";
+	//    }
 
     // Security
-    Mod+Ctrl+L hotkey-overlay-title="Lock Screen" {
-        spawn "dms" "ipc" "call" "lock" "lock";
-    }
+    // Mod+Ctrl+L hotkey-overlay-title="Lock Screen" {
+    //     spawn "dms" "ipc" "call" "lock" "lock";
+    // }
 
-    // Audio Controls
-    XF86AudioRaiseVolume allow-when-locked=true {
-        spawn "dms" "ipc" "call" "audio" "increment" "3";
-    }
-    XF86AudioLowerVolume allow-when-locked=true {
-        spawn "dms" "ipc" "call" "audio" "decrement" "3";
-    }
-    XF86AudioMute allow-when-locked=true {
-        spawn "dms" "ipc" "call" "audio" "mute";
-    }
-    XF86AudioMicMute allow-when-locked=true {
-        spawn "dms" "ipc" "call" "audio" "micmute";
-    }
+	/////////// Noctalia binds ////////////
 
-    // Brightness Controls
-    XF86MonBrightnessUp allow-when-locked=true {
-       spawn "dms" "ipc" "call" "brightness" "increment" "5" "";
-    }
-    XF86MonBrightnessDown allow-when-locked=true {
-       spawn "dms" "ipc" "call" "brightness" "decrement" "5" "";
-    }
-	
+	// Applications
+	Mod+Space hotkey-overlay-title="Application Launcher" {
+		spawn-sh "noctalia msg panel-toggle launcher";	
+	}
+	Mod+S hotkey-overlay-title="Noctalia settings" {
+		spawn-sh "noctalia msg settings-toggle"; 
+	}
+	Mod+P { spawn-sh "noctalia msg panel-toggle control-center"; }
 
-    // Mod-Shift-/, which is usually the same as Mod-?,
-    // shows a list of important hotkeys.
-    Mod+Shift+Slash { show-hotkey-overlay; }
+    // Audio & Brightness
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down"; }
+    XF86AudioMute allow-when-locked=true { spawn-sh "noctalia msg volume-mute"; }
+	XF86AudioMicMute allow-when-locked=true { spawn-sh "noctalia msg mic-mute"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "noctalia msg brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness-down"; }
 
-    // Example volume keys mappings for PipeWire & WirePlumber.
-    // The allow-when-locked=true property makes them work even when the session is locked.
-    // Using spawn-sh allows to pass multiple arguments together with the command.
-    // "-l 1.0" limits the volume to 100%.
-    // XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
-    // XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
-    // XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
-    // XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+	///////////////////////////////////////
 
     // Example media keys mapping using playerctl.
     // This will work with any MPRIS-enabled media player.
@@ -80,12 +56,6 @@ binds {
     // XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
     // XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
     // XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
-
-    // Example brightness key mappings for brightnessctl.
-    // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
-    // but you need to manually put each argument in separate "" quotes.
-    // XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
-    // XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
@@ -112,44 +82,21 @@ binds {
     Mod+Ctrl+J         { move-workspace-down; }
     Mod+Ctrl+K         { move-workspace-up; }
 
-    // Mod+Ctrl+Left  { focus-monitor-left; }
-    // Mod+Ctrl+Down  { focus-monitor-down; }
-    // Mod+Ctrl+Up    { focus-monitor-up; }
-    // Mod+Ctrl+Right { focus-monitor-right; }
-    // Mod+Ctrl+H     { focus-monitor-left; }
-    // Mod+Ctrl+J     { focus-monitor-down; }
-    // Mod+Ctrl+K     { focus-monitor-up; }
-    // Mod+Ctrl+L     { focus-monitor-right; }
-    //
-    // Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
-    // Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
-    // Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
-    // Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
-    // Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
-    // Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
-    // Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
-    // Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+    Mod+Alt+H     { focus-monitor-left; }
+    Mod+Alt+J     { focus-monitor-down; }
+    Mod+Alt+K     { focus-monitor-up; }
+    Mod+Alt+L     { focus-monitor-right; }
 
-    // Alternatively, there are commands to move just a single window:
-    // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
-    // ...
+    Mod+Shift+Alt+H     { move-column-to-monitor-left; }
+    Mod+Shift+Alt+J     { move-column-to-monitor-down; }
+    Mod+Shift+Alt+K     { move-column-to-monitor-up; }
+    Mod+Shift+Alt+L     { move-column-to-monitor-right; }
 
     // And you can also move a whole workspace to another monitor:
-    // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
-    // ...
-
-    // Mod+Page_Down      { focus-workspace-down; }
-    // Mod+Page_Up        { focus-workspace-up; }
-    // Mod+U              { focus-workspace-down; }
-    // Mod+I              { focus-workspace-up; }
-    // Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
-    // Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
-    // Mod+Ctrl+U         { move-column-to-workspace-down; }
-    // Mod+Ctrl+I         { move-column-to-workspace-up; }
-
-    // Alternatively, there are commands to move just a single window:
-    // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
-    // ...
+    Mod+Ctrl+Alt+H     { move-workspace-to-monitor-left; }
+    Mod+Ctrl+Alt+J     { move-workspace-to-monitor-down; }
+    Mod+Ctrl+Alt+K     { move-workspace-to-monitor-up; }
+    Mod+Ctrl+Alt+L     { move-workspace-to-monitor-right; }
 
     // You can bind mouse wheel scroll ticks using the following syntax.
     // These binds will change direction based on the natural-scroll setting.
@@ -159,29 +106,8 @@ binds {
     // You can set a cooldown on any bind, but it's most useful for the wheel.
     Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
     Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
-    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
-    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
-
-    // Mod+WheelScrollRight      { focus-column-right; }
-    // Mod+WheelScrollLeft       { focus-column-left; }
-    // Mod+Ctrl+WheelScrollRight { move-column-right; }
-    // Mod+Ctrl+WheelScrollLeft  { move-column-left; }
-
-    // Usually scrolling up and down with Shift in applications results in
-    // horizontal scrolling; these binds replicate that.
-    // Mod+Shift+WheelScrollDown      { focus-column-right; }
-    // Mod+Shift+WheelScrollUp        { focus-column-left; }
-    // Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
-    // Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
-
-    // Similarly, you can bind touchpad scroll "ticks".
-    // Touchpad scrolling is continuous, so for these binds it is split into
-    // discrete intervals.
-    // These binds are also affected by touchpad's natural-scroll, so these
-    // example binds are "inverted", since we have natural-scroll enabled for
-    // touchpads by default.
-    // Mod+TouchpadScrollDown { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02+"; }
-    // Mod+TouchpadScrollUp   { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02-"; }
+    Mod+Shift+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Shift+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
 
     // You can refer to workspaces by index. However, keep in mind that
     // niri is a dynamic workspace system, so these commands are kind of
@@ -210,18 +136,6 @@ binds {
     Mod+Shift+8 { move-column-to-workspace 8; }
     Mod+Shift+9 { move-column-to-workspace 9; }
 
-    // Alternatively, there are commands to move just a single window:
-    // Mod+Ctrl+1 { move-window-to-workspace 1; }
-
-    // Switches focus between the current and the previous workspace.
-    // Mod+Tab { focus-workspace-previous; }
-
-    // The following binds move the focused window in and out of a column.
-    // If the window is alone, they will consume it into the nearby column to the side.
-    // If the window is already in a column, they will expel it out.
-    // Mod+BracketLeft  { consume-or-expel-window-left; }
-    // Mod+BracketRight { consume-or-expel-window-right; }
-
     // Consume one window from the right to the bottom of the focused column.
     Mod+Comma  { consume-window-into-column; }
     // Expel the bottom window from the focused column to the right.
@@ -229,9 +143,7 @@ binds {
 
     // Cycle through widths set in preset-column-widths.
     // Mod+R { switch-preset-column-width; }
-    // Cycling through the presets in reverse order is also possible.
     // Mod+Shift+R { switch-preset-column-width-back; }
-
     // Mod+Ctrl+Shift+R { switch-preset-window-height; }
     // Mod+Ctrl+R { reset-window-height; }
 
@@ -249,20 +161,9 @@ binds {
 
     Mod+C { center-column; }
 
-    // Center all fully visible columns on screen.
-    // Mod+Ctrl+C { center-visible-columns; }
-
     // Finer width adjustments.
-    // This command can also:
-    // * set width in pixels: "1000"
-    // * adjust width in pixels: "-5" or "+5"
-    // * set width as a percentage of screen width: "25%"
-    // * adjust width as a percentage of screen width: "-10%" or "+10%"
-    // Pixel sizes use logical, or scaled, pixels. I.e. on an output with scale 2.0,
-    // set-column-width "100" will make the column occupy 200 physical screen pixels.
     Mod+Minus { set-column-width "-10%"; }
     Mod+Equal { set-column-width "+10%"; }
-
     // Finer height adjustments when in column with other windows.
     Mod+Shift+Minus { set-window-height "-10%"; }
     Mod+Shift+Equal { set-window-height "+10%"; }
@@ -275,14 +176,6 @@ binds {
     // Windows in this column will appear as vertical tabs,
     // rather than stacked on top of each other.
     // Mod+W { toggle-column-tabbed-display; }
-
-    // Actions to switch layouts.
-    // Note: if you uncomment these, make sure you do NOT have
-    // a matching layout switch hotkey configured in xkb options above.
-    // Having both at once on the same hotkey will break the switching,
-    // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
-    // Mod+Space       { switch-layout "next"; }
-    // Mod+Shift+Space { switch-layout "prev"; }
 
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
