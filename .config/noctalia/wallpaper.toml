@@ -3,5 +3,5 @@
 directory = "~/.local/share/backgrounds"
 
 [wallpaper.default]
-path = "$XDG_DATA_HOME/backgrounds/sunset-background.jpg"
+path = "~/.local/share/backgrounds/sunset-background.jpg"
 
