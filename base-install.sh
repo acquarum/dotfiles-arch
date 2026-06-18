@@ -100,7 +100,7 @@ mount-point = /dev/zram0
 	# Create the symlinks to the configuration files
 	mkdir -p "$zsh_dir" "$git_dir" "$tmux_dir" "$nvim_dir" "$yazi_dir"
 	stow --ignore='.config/alacritty' --ignore='.config/niri' --ignore='.config/gtk-3.0' \
-		--ignore='.config/gtk-4.0' --ignore='.local' --ignore='.config/DankMaterialShell' .
+		--ignore='.config/gtk-4.0' --ignore='.local' --ignore='.config/noctalia' .
 
 	##### PARU AUR HELPER #####
 	git clone https://aur.archlinux.org/paru.git --depth 1 "$aur_dir/paru"
@@ -122,12 +122,6 @@ mount-point = /dev/zram0
 
 	##### YAZI #####
 	sudo pacman -S --needed yazi 7zip jq fd ripgrep fzf zoxide
-
-	##### GIT #####
-	# ssh-keygen -t ed25519 -C "edoardo980@gmail.com" -f "$HOME/.ssh/id_ed25519" -N "" -q
-	# eval "$(ssh-agent)"
-	# ssh-add ~/.ssh/id_ed25519
-	# git remote set-url origin git@github.com:BlinDzOrE/dotfiles-arch.git
 
 	# oh-my-zsh
 	git clone https://github.com/ohmyzsh/ohmyzsh.git --depth 1 "$ohmyzsh_dir"
@@ -169,10 +163,6 @@ mount-point = /dev/zram0
 
 	# Update locate database
 	sudo updatedb
-
-	##### FINISH #####
-	# echo "Add this key to your GitHub account:"
-	# cat "$HOME/.ssh/id_ed25519.pub"
 }
 
 main "$@"
