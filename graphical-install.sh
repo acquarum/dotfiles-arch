@@ -16,6 +16,7 @@ alacritty_dir="$XDG_CONFIG_HOME/alacritty"
 niri_dir="$XDG_CONFIG_HOME/niri"
 gtk3_dir="$XDG_CONFIG_HOME/gtk-3.0"
 gtk4_dir="$XDG_CONFIG_HOME/gtk-4.0"
+noctalia_dir="$XDG_CONFIG_HOME/noctalia"
 bg_dir="$XDG_DATA_HOME/backgrounds"
 
 main() {
@@ -25,7 +26,7 @@ main() {
 	##########################
 
 	# Create the symlinks to the configuration files
-	mkdir -p "$alacritty_dir" "$niri_dir" "$gtk3_dir" "$gtk4_dir" "$bg_dir"
+	mkdir -p "$alacritty_dir" "$niri_dir" "$noctalia_dir" "$gtk3_dir" "$gtk4_dir" "$bg_dir"
 	stow .
 
 	##### LY DISPLAY MANAGER #####
@@ -39,8 +40,8 @@ main() {
 	sudo pacman -S --needed niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk \
 		gnome-keyring pipewire wireplumber wl-clipboard
 
-	# Previous snapshot: June 17 11 pm
 	##### NOCTALIA SHELL #####
+	paru -S noctalia-git
 
 	##### ALACRITTY #####
 	sudo pacman --needed -S alacritty
