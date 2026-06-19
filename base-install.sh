@@ -62,21 +62,23 @@ main() {
 	sudo reflector --protocol https --age 12 --latest 50 --fastest 10 --sort rate --save /etc/pacman.d/mirrorlist
 	sudo mv /etc/xdg/reflector/reflector.conf /etc/xdg/reflector/reflector.conf.default
 	sudo ln -s "$dot_dir/resources/reflector/reflector.conf" /etc/xdg/reflector/reflector.conf 
-	sudo systemctl enable reflector.timer
+	sudo systemctl enable --now reflector.timer
 
 	# Update mirror database
 	sudo pacman -Syyu
 
-	# Install base packages
+	# Install important packages
 	sudo pacman --needed -S curl wget stow gzip zip unzip tar xz make gcc locate \
-		nftables bluez bluez-utils man-db man-pages texinfo acpid
+		nftables bluez bluez-utils man-db man-pages texinfo upower pacman-contrib
 	echo "PRUNENAMES = \".snapshots\"" | sudo tee /etc/updatedb.conf
-	sudo systemctl enable bluetooth
-	sudo systemctl enable acpid
+	sudo systemctl enable --now bluetooth
 
-	# Install useful packages
-	sudo pacman --needed -S noto-fonts noto-fonts-cjk noto-fonts-emoji \
-		noto-fonts-extra pacman-contrib
+	# Power management
+	sudo pacman --needed -S tlp tlp-pd tlp-rdw
+	sudo systemctl enable --now tlp.service
+	sudo systemctl enable --now tlp-pd.service
+	sudo systemctl enable NetworkManager-dispatcher.service
+	sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
 
 	# Setup swap on zram
 	sudo pacman --needed -S zram-generator

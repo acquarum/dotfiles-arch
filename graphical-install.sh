@@ -30,11 +30,14 @@ main() {
 	stow .
 
 	##### LY DISPLAY MANAGER #####
-	sudo pacman --needed -S ly brightnessctl
+	sudo pacman --needed -Syu ly brightnessctl
 	sudo systemctl disable kmsconvt@tty1.service
 	sudo systemctl enable ly@tty1.service
 	sudo mv /etc/ly/config.ini /etc/ly/config.ini.default
 	sudo ln -s "$dot_dir/resources/ly/config.ini" /etc/ly/config.ini
+
+	# Fonts
+	sudo pacman --needed -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
 
 	##### NIRI #####
 	sudo pacman -S --needed niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk \
