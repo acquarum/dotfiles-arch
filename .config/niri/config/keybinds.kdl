@@ -11,34 +11,16 @@ binds {
     Mod+Return hotkey-overlay-title="Open alacritty" { spawn "alacritty"; }
     Mod+Shift+Return hotkey-overlay-title="Open alacritty with default tmux session" { spawn "alacritty" "--command" "tmux" "new-session" "-A" "-s" "default"; }
     Mod+B hotkey-overlay-title="Open firefox" { spawn "firefox"; }
-	//    Mod+Y hotkey-overlay-title="Clipboard Manager" {
-	//        spawn "dms" "ipc" "call" "clipboard" "toggle";
-	//    }
-	//    Mod+P hotkey-overlay-title="Task Manager" {
-	//        spawn "dms" "ipc" "call" "processlist" "focusOrToggle";
-	//    }
-	//    Mod+N hotkey-overlay-title="Notification Center" {
-	//        spawn "dms" "ipc" "call" "notifications" "toggle";
-	//    }
-	//    Mod+W hotkey-overlay-title="Browse Wallpapers" {
-	//        spawn "dms" "ipc" "call" "dankdash" "wallpaper";
-	//    }
-
-    // Security
-    // Mod+Ctrl+L hotkey-overlay-title="Lock Screen" {
-    //     spawn "dms" "ipc" "call" "lock" "lock";
-    // }
 
 	/////////// Noctalia binds ////////////
 
 	// Applications
-	Mod+Space hotkey-overlay-title="Application Launcher" {
-		spawn-sh "noctalia msg panel-toggle launcher";	
-	}
-	Mod+S hotkey-overlay-title="Noctalia settings" {
-		spawn-sh "noctalia msg settings-toggle"; 
-	}
-	Mod+P { spawn-sh "noctalia msg panel-toggle control-center"; }
+	Mod+Space hotkey-overlay-title="Application Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
+	Mod+S hotkey-overlay-title="Noctalia settings" { spawn-sh "noctalia msg settings-toggle"; }
+	Mod+P hotkey-overlay-title="Noctalia control center" { spawn-sh "noctalia msg panel-toggle control-center"; }
+	Mod+Y hotkey-overlay-title="Clipboard" { spawn-sh "noctalia msg panel-toggle clipboard"; }
+	Mod+N hotkey-overlay-title="Notifications" { spawn-sh "noctalia msg panel-toggle control-center notifications"; }
+	Mod+T hotkey-overlay-title="System monitor" { spawn-sh "noctalia msg panel-toggle control-center system"; }
 
     // Audio & Brightness
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
@@ -47,6 +29,12 @@ binds {
 	XF86AudioMicMute allow-when-locked=true { spawn-sh "noctalia msg mic-mute"; }
     XF86MonBrightnessUp allow-when-locked=true { spawn-sh "noctalia msg brightness-up"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness-down"; }
+
+	// System controls
+	Mod+Shift+R hotkey-overlay-title="Reboot system" { spawn-sh "noctalia msg session reboot"; }
+	Mod+Shift+S hotkey-overlay-title="Shutdown system" { spawn-sh "noctalia msg session shutdown"; }
+	Mod+Shift+M hotkey-overlay-title="Lock session" { spawn-sh "noctalia msg session lock-and-suspend"; }
+	Mod+Shift+Q hotkey-overlay-title="Logout" { spawn-sh "noctalia msg session logout"; }
 
 	///////////////////////////////////////
 
@@ -190,9 +178,6 @@ binds {
     // The allow-inhibiting=false property can be applied to other binds as well,
     // which ensures niri always processes them, even when an inhibitor is active.
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
-
-    // The quit action will show a confirmation dialog to avoid accidental exits.
-    Mod+Shift+Q { quit; }
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
