@@ -83,13 +83,13 @@ main() {
 	# Setup swap on zram
 	sudo pacman --needed -S zram-generator
 	echo "[zram0]
-zram-size = ram / 2
+zram-size = min(ram / 2, 6144)
 compression-algorithm = zstd
-swap-priority = 100
-mount-point = /dev/zram0
 " | sudo tee /etc/systemd/zram-generator.conf
 	sudo systemctl daemon-reload
 	sudo systemctl start systemd-zram-setup@zram0.service
+	sudo sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="zswap.enabled=0"/' /etc/default/grub
+	sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 	# Create directories
 	mkdir -p "$XDG_BIN_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" \
