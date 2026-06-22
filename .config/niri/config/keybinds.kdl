@@ -15,7 +15,7 @@ binds {
 	/////////// Noctalia binds ////////////
 
 	// Applications
-	Mod+Space hotkey-overlay-title="Application Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
+	Mod+R hotkey-overlay-title="Application Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
 	Mod+S hotkey-overlay-title="Noctalia settings" { spawn-sh "noctalia msg settings-toggle"; }
 	Mod+P hotkey-overlay-title="Noctalia control center" { spawn-sh "noctalia msg panel-toggle control-center"; }
 	Mod+Y hotkey-overlay-title="Clipboard" { spawn-sh "noctalia msg panel-toggle clipboard"; }
@@ -37,6 +37,9 @@ binds {
 	Mod+Shift+Q hotkey-overlay-title="Logout" { spawn-sh "noctalia msg session logout"; }
 
 	///////////////////////////////////////
+
+	// Cycle through configured keyboard layouts
+	Mod+Space hotkey-overlay-title="Cycle through keyboard layouts" { switch-layout "next"; }
 
     // Example media keys mapping using playerctl.
     // This will work with any MPRIS-enabled media player.
