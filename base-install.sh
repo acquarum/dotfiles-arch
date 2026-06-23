@@ -157,10 +157,20 @@ compression-algorithm = zstd
 		shellcheck shfmt bash-language-server lua-language-server stylua
 
 	##### GRUB THEME #####
-	unzip ./resources/themes/grub-dark-matter.zip -d /tmp
 	sudo mkdir -p /boot/grub/themes
-	sudo mv /tmp/grub-dark-matter/darkmatter /boot/grub/themes/
+	sudo unzip ./resources/themes/grub-dark-matter.zip -d /boot/grub/themes/ 
 	echo GRUB_THEME=\"/boot/grub/themes/darkmatter/theme.txt\" | sudo tee -a /etc/default/grub 
+	echo "
+menuentry \"System restart\" --class restart {
+	echo \"System rebooting...\"]
+	reboot
+}
+
+menuentry \"System shutdown\" --class shutdown {
+	echo \"System shutting down...\"
+	halt
+}
+" | sudo tee -a /etc/grub.d/40_custom
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 	# Update locate database
