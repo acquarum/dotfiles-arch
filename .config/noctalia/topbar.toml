@@ -7,21 +7,18 @@ margin_edge = 0
 margin_ends = 0
 radius = 0
 widget_spacing = 12
-scale = 1.0
 
 start = [ "workspaces", "active_window" ]
 center = [ "group:g1" ]
 end = [
-    "tray",
-    "ram",
-    "cpu",
-    "keyboard_layout",
-    "notifications",
-    "network",
-    "bluetooth",
-    "volume",
-    "brightness",
-    "battery"
+	"tray",
+	"keyboard_layout",
+	"ram",
+	"cpu",
+	"volume",
+	"bluetooth",
+	"network",
+	"battery"
 ]
 
 [[bar.default.capsule_group]]
@@ -29,5 +26,39 @@ fill = "surface_variant"
 id = "g1"
 members = [ "date", "clock" ]
 opacity = 0.0
-padding = 6.0
+padding = 0.0
+
+[widget.network]
+scale = 1.4
+show_label = false
+
+[widget.active_window]
+icon_size = 20.0
+
+[widget.battery]
+display_mode = "graphic"
+
+[widget.bluetooth]
+scale = 1.4
+
+[widget.keyboard_layout]
+scale = 1.2
+show_icon = false
+
+[widget.tray]
+scale = 1.2
+
+[widget.volume]
+scale = 1.3
+show_label = false
+
+[widget.cpu]
+glyph = "cpu"
+scale = 1.2
+show_label = false
+
+[widget.ram]
+glyph = "activity"
+scale = 1.2
+show_label = false
 

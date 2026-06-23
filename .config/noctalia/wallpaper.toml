@@ -5,3 +5,6 @@ directory = "~/.local/share/backgrounds"
 [wallpaper.default]
 path = "~/.local/share/backgrounds/sunset-background.jpg"
 
+[backdrop]
+enabled = true
+

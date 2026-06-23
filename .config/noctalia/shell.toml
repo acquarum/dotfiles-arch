@@ -1,6 +1,8 @@
 
 [shell]
+polkit_agent = true
 settings_show_advanced = true
+telemetry_enabled = true
 
 [shell.panel]
 launcher_categories = false
