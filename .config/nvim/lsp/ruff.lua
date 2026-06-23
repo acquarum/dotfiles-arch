@@ -20,6 +20,5 @@ return {
     })
   end,
   on_exit = function() vim.api.nvim_clear_autocmds { group = 'lsp_attach_disable_ruff_hover' } end,
-  ---@type lspconfig.settings.ruff
   settings = {},
 }

@@ -1,7 +1,6 @@
 ---@type vim.lsp.Config
 return {
   cmd = { 'lua-language-server' },
-  ---@type lspconfig.settings.lua_ls
   settings = {
     Lua = {
       codeLens = {
