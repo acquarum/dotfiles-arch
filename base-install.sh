@@ -154,7 +154,10 @@ compression-algorithm = zstd
 
 	##### NEOVIM #####
 	sudo pacman --needed -S nvim clang fd ripgrep tree-sitter-cli ttf-jetbrains-mono-nerd \
-		shellcheck shfmt bash-language-server lua-language-server stylua
+		shellcheck shfmt bash-language-server lua-language-server stylua ty ruff
+
+	# Python
+	sudo pacman -S --needed uv
 
 	##### GRUB THEME #####
 	sudo mkdir -p /boot/grub/themes
