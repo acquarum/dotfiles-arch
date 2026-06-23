@@ -33,7 +33,7 @@ binds {
 	// System controls
 	Mod+Shift+R hotkey-overlay-title="Reboot system" { spawn-sh "noctalia msg session reboot"; }
 	Mod+Shift+S hotkey-overlay-title="Shutdown system" { spawn-sh "noctalia msg session shutdown"; }
-	Mod+Shift+M hotkey-overlay-title="Lock session" { spawn-sh "noctalia msg session lock-and-suspend"; }
+	Mod+Shift+M hotkey-overlay-title="Lock session" { spawn-sh "noctalia msg session lock"; }
 	Mod+Shift+Q hotkey-overlay-title="Logout" { spawn-sh "noctalia msg session logout"; }
 
 	///////////////////////////////////////
