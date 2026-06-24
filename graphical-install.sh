@@ -35,6 +35,8 @@ main() {
 	sudo systemctl enable ly@tty1.service
 	sudo mv /etc/ly/config.ini /etc/ly/config.ini.default
 	sudo ln -s "$dot_dir/resources/ly/config.ini" /etc/ly/config.ini
+	sudo sed -i "s/After=getty@%i.service/After=kmsconvt@%i.service/" /etc/systemd/system/multi-user.target.wants/ly@tty1.service
+	sudo sed -i "s/Conflicts=getty@%i.service/Conflicts=kmsconvt@%i.service/" /etc/systemd/system/multi-user.target.wants/ly@tty1.service
 
 	# Fonts
 	sudo pacman --needed -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
