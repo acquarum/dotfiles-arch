@@ -46,6 +46,7 @@ main() {
 		gnome-keyring pipewire wireplumber wl-clipboard
 
 	##### NOCTALIA SHELL #####
+	sudo -S --needed libnotify
 	paru -S noctalia-git
 
 	##### ALACRITTY #####
