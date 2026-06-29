@@ -77,6 +77,11 @@ Inherits=macOS
 	# Useful desktop apps
 	sudo pacman -S --needed firefox
 
+	# Texlive
+	wget -P /tmp https://ctan.mirror.garr.it/mirrors/ctan/systems/texlive/tlnet/install-tl-unx.tar.gz
+	destdir=$(tar xzvf /tmp/install-tl-unx.tar.gz -C /tmp | head -1 | sed -e 's/\/.*//')
+	(cd "/tmp/$destdir" && ./install-tl -profile "$dot_dir/resources/texlive/texlive.profile")
+
 	# Update locate db
 	sudo updatedb
 }
