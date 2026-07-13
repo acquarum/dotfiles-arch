@@ -14,6 +14,7 @@ map('<C-d>', '<C-d>zz', 'Scroll downwards by half a screen')
 map('<C-u>', '<C-u>zz', 'Scroll upwards by half a screen')
 map('n', 'nzzzv', 'Go to next search match')
 map('N', 'Nzzzv', 'Go to previous search match')
+map('gb', '<C-t>', 'Go back to previous location after jump')
 
 -- Text editing
 map('<CR>', 'o<Esc>', 'Add new line below without leaving normal mode')
