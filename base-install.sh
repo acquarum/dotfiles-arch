@@ -104,7 +104,7 @@ compression-algorithm = zstd
 	# Create the symlinks to the configuration files
 	mkdir -p "$zsh_dir" "$git_dir" "$tmux_dir" "$nvim_dir" "$yazi_dir"
 	stow --ignore='.config/alacritty' --ignore='.config/niri' --ignore='.config/gtk-3.0' \
-		--ignore='.config/gtk-4.0' --ignore='.local' --ignore='.config/noctalia' .
+		--ignore='.config/gtk-4.0' --ignore='.local' --ignore='.config/noctalia' --ignore='.config/zathura' .
 
 	##### PARU AUR HELPER #####
 	git clone https://aur.archlinux.org/paru.git --depth 1 "$aur_dir/paru"

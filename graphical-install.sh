@@ -17,6 +17,7 @@ niri_dir="$XDG_CONFIG_HOME/niri"
 gtk3_dir="$XDG_CONFIG_HOME/gtk-3.0"
 gtk4_dir="$XDG_CONFIG_HOME/gtk-4.0"
 noctalia_dir="$XDG_CONFIG_HOME/noctalia"
+zathura_dir="$XDG_CONFIG_HOME/zathura"
 bg_dir="$XDG_DATA_HOME/backgrounds"
 
 main() {
@@ -26,7 +27,7 @@ main() {
 	##########################
 
 	# Create the symlinks to the configuration files
-	mkdir -p "$alacritty_dir" "$niri_dir" "$noctalia_dir" "$gtk3_dir" "$gtk4_dir" "$bg_dir"
+	mkdir -p "$alacritty_dir" "$niri_dir" "$noctalia_dir" "$gtk3_dir" "$gtk4_dir" "$bg_dir" "$zathura_dir"
 	stow .
 
 	##### LY DISPLAY MANAGER #####
@@ -43,7 +44,7 @@ main() {
 
 	##### NIRI #####
 	sudo pacman -S --needed niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk \
-		gnome-keyring pipewire wireplumber wl-clipboard
+		gnome-keyring pipewire wireplumber wl-clipboard xdg-utils
 
 	##### NOCTALIA SHELL #####
 	sudo -S --needed libnotify
@@ -76,6 +77,11 @@ Inherits=macOS
 
 	# Useful desktop apps
 	sudo pacman -S --needed firefox
+
+	##### PDF SUPPORT #####
+
+	# Zathura
+	sudo pacman -S --needed tesseract-data-eng tesseract-data-ita zathura zathura-pdf-mupdf
 
 	# Texlive
 	wget -P /tmp https://ctan.mirror.garr.it/mirrors/ctan/systems/texlive/tlnet/install-tl-unx.tar.gz
