@@ -144,11 +144,7 @@ fi
 
 	##### TMUX #####
 	sudo pacman --needed -S tmux
-
-	# Instal tpm (tmux-plugin-manager)
-	mkdir "$tmux_dir/plugins"
-	git clone --depth 1 https://github.com/tmux-plugins/tpm "$tmux_dir/plugins/tpm"
-	bash -c "$tmux_dir/plugins/tpm/bin/install_plugins"
+	mkdir "$XDG_DATA_HOME/tmux/plugins"
 
 	##### NEOVIM #####
 	sudo pacman --needed -S nvim clang fd ripgrep tree-sitter-cli ttf-jetbrains-mono-nerd \
