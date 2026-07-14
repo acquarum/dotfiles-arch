@@ -127,24 +127,20 @@ compression-algorithm = zstd
 	##### YAZI #####
 	sudo pacman -S --needed yazi 7zip jq fd ripgrep fzf zoxide
 
-	# oh-my-zsh
-	git clone https://github.com/ohmyzsh/ohmyzsh.git --depth 1 "$ohmyzsh_dir"
+	##### ZSH #####
+	echo "
+if [[ -z \"\$XDG_CONFIG_HOME\" ]]; then
+	export XDG_CONFIG_HOME=\"\$HOME/.config\"
+fi
 
-	# powerlevel10k
-	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
-		"$ohmyzsh_themes/powerlevel10k"
+if [[ -d \"\$XDG_CONFIG_HOME/zsh\" ]]; then
+	export ZDOTDIR=\"\$XDG_CONFIG_HOME/zsh\"
+fi
+" | sudo tee /etc/zsh/zshenv
 
-	# zsh-completions
-	git clone https://github.com/zsh-users/zsh-completions.git --depth 1 \
-		"$ohmyzsh_plugins/zsh-completions"
+	mkdir -p "$XDG_CACHE_HOME/zsh" "$XDG_STATE_HOME/zsh" "$XDG_DATA_HOME/zsh/plugins"
 
-	# zsh-autosuggestions
-	git clone https://github.com/zsh-users/zsh-autosuggestions --depth 1 \
-		"$ohmyzsh_plugins/zsh-autosuggestions"
-
-	# zsh-syntax-highlighting
-	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git --depth 1 \
-		"$ohmyzsh_plugins/zsh-syntax-highlighting"
+	sudo pacman -S --needed fzf fd bat eza ripgrep
 
 	##### TMUX #####
 	sudo pacman --needed -S tmux
