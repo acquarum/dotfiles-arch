@@ -11,15 +11,6 @@ dot_dir=$(realpath "$(dirname "$0")")
 
 cd "$dot_dir"
 
-# Install directories
-alacritty_dir="$XDG_CONFIG_HOME/alacritty"
-niri_dir="$XDG_CONFIG_HOME/niri"
-gtk3_dir="$XDG_CONFIG_HOME/gtk-3.0"
-gtk4_dir="$XDG_CONFIG_HOME/gtk-4.0"
-noctalia_dir="$XDG_CONFIG_HOME/noctalia"
-zathura_dir="$XDG_CONFIG_HOME/zathura"
-bg_dir="$XDG_DATA_HOME/backgrounds"
-
 main() {
 
 	##########################
@@ -27,7 +18,6 @@ main() {
 	##########################
 
 	# Create the symlinks to the configuration files
-	mkdir -p "$alacritty_dir" "$niri_dir" "$noctalia_dir" "$gtk3_dir" "$gtk4_dir" "$bg_dir" "$zathura_dir"
 	stow .
 
 	##### LY DISPLAY MANAGER #####

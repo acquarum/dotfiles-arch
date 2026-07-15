@@ -25,11 +25,6 @@ tmux_dir="$config_dir/tmux"
 nvim_dir="$config_dir/nvim"
 yazi_dir="$config_dir/yazi"
 
-ohmyzsh_dir="$zsh_dir/oh-my-zsh"
-ohmyzsh_custom="$ohmyzsh_dir/custom"
-ohmyzsh_themes="$ohmyzsh_custom/themes"
-ohmyzsh_plugins="$ohmyzsh_custom/plugins"
-
 # Environmental variables
 export XDG_CONFIG_HOME="$config_dir"
 export XDG_DATA_HOME="$data_dir"
@@ -102,7 +97,6 @@ compression-algorithm = zstd
 	##########################
 
 	# Create the symlinks to the configuration files
-	mkdir -p "$zsh_dir" "$git_dir" "$tmux_dir" "$nvim_dir" "$yazi_dir"
 	stow --ignore='.config/alacritty' --ignore='.config/niri' --ignore='.config/gtk-3.0' \
 		--ignore='.config/gtk-4.0' --ignore='.local' --ignore='.config/noctalia' --ignore='.config/zathura' .
 
