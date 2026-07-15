@@ -1,39 +1,28 @@
 # Arch configuration files
 
+These dotfiles are meant to be installed on a fresh arch linux installation with btrfs filesystem.
+The only required packages are listed below.
+
 ### Dependencies
 
-- stow
+- base-devel
+- btrfs-progs
+- grub
+- grub-btrfs
+- efibootmgr
 - openssh
-- gzip
-- tar
-- xz
 - git
-- make
-- gcc
-- zsh:
-  - oh-my-zsh plugin manager
-  - power level 10k prompt
-  - zsh-completions plugin
-  - zsh-autosuggestions plugin
-  - zsh-syntax-highlighting plugin
-- alacritty
-- tmux:
-  - tpm (tmux plugin manager)
-- neovim:
-  - clang
-  - fd-find
-  - ripgrep
-  - tree-sitter-cli
-  - wl-clipboard
-  - ttf-jetbrains-mono-nerd
-  - bashls
-  - lua-language-server
-  - stylua
-  - shfmt
-  - shellcheck
-
+- networkmanager
+- zsh (has to be your default shell)
+- neovim
 
 ### Installation
 
-- Clone the repo inside your home folder
-- Run ```install.sh``` from inside the cloned repo
+- Clone the repo in your home folder
+- Change the values inside ```.config/git/config``` to reflect your github username and email
+- Change the values inside ```resources/texlive/texlive.profile``` to reflect the actual name of
+your local user
+- Change the "btrfs_dev" variable in the ```base-install.sh``` script to the name
+of the device partition where the top level btrfs subvolume resides in your machine
+- Run ```base-install.sh``` to install the base system (no desktop environment), THEN
+run ```graphical-install.sh``` to install the desktop environment (niri + noctalia)
