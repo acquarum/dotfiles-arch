@@ -19,12 +19,6 @@ config_dir="$HOME/.config"
 aur_dir="$HOME/aur"
 data_dir="$HOME/.local/share"
 
-zsh_dir="$config_dir/zsh"
-git_dir="$config_dir/git"
-tmux_dir="$config_dir/tmux"
-nvim_dir="$config_dir/nvim"
-yazi_dir="$config_dir/yazi"
-
 # Environmental variables
 export XDG_CONFIG_HOME="$config_dir"
 export XDG_DATA_HOME="$data_dir"
