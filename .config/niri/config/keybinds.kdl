@@ -39,9 +39,6 @@ binds {
 
 	///////////////////////////////////////
 
-	// Cycle through configured keyboard layouts
-	Mod+Space hotkey-overlay-title="Cycle through keyboard layouts" { switch-layout "next"; }
-
     // Example media keys mapping using playerctl.
     // This will work with any MPRIS-enabled media player.
     // XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
