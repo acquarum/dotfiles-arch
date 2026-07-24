@@ -36,6 +36,11 @@ main() {
 	sudo pacman -S --needed niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk \
 		gnome-keyring pipewire wireplumber wl-clipboard xdg-utils
 
+	echo "
+HandlePowerKey=suspend
+HandlePowerKeyLongPress=poweroff
+" | sudo tee /etc/systemd/logind.conf
+
 	##### NOCTALIA SHELL #####
 	sudo -S --needed libnotify
 	paru -S noctalia-git

@@ -3,6 +3,8 @@
 // Find the full list of options on the wiki:
 // https://niri-wm.github.io/niri/Configuration:-Input
 input {
+	disable-power-key-handling
+
     keyboard {
         xkb {
             // You can set rules, model, layout, variant and options.
@@ -23,7 +25,7 @@ input {
     touchpad {
         // off
         tap
-        // dwt
+        dwt
         // dwtp
         // drag false
         // drag-lock

@@ -16,3 +16,6 @@ size = 14
 [colors]
 draw_bold_text_with_bright_colors = true
 
+[mouse]
+hide_when_typing = true
+
