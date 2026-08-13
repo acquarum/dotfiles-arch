@@ -42,8 +42,8 @@ HandlePowerKeyLongPress=poweroff
 " | sudo tee /etc/systemd/logind.conf
 
 	##### NOCTALIA SHELL #####
-	sudo -S --needed libnotify
-	paru -S noctalia-git
+	sudo pacman -S --needed libnotify
+	sudo pacman -S --needed noctalia
 
 	##### ALACRITTY #####
 	sudo pacman --needed -S alacritty

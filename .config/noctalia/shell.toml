@@ -4,7 +4,16 @@ polkit_agent = true
 settings_show_advanced = true
 telemetry_enabled = true
 
+[shell.launcher]
+categories = false
+compact = true
+fetch_exchange_rates = false
+
 [shell.panel]
-launcher_categories = false
-launcher_compact = true
 transparency_mode = "glass"
+
+[brightness]
+minimum_brightness = 0.05
+
+[nightlight]
+enabled = true
