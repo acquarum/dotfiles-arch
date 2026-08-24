@@ -101,3 +101,21 @@ map(
   'Inspect installed packages and pending updates'
 )
 map('<leader>vpu', vim.pack.update, 'Update all packages')
+
+-- Building C projects
+map(
+  '<leader>ms',
+  '<cmd>!meson setup build<CR>',
+  { desc = 'Meson: setup project build', silent = false }
+)
+map(
+  '<leader>mc',
+  '<cmd>!meson compile -C build<CR>',
+  { desc = 'Meson: compile project', silent = false }
+)
+map('<leader>mr', '<cmd>!./build/main<CR>', { desc = 'Meson: run project', silent = false })
+map(
+  '<leader>mR',
+  '<cmd>!meson compile -C build && ./build/main<CR>',
+  { desc = 'Meson: build and run project', silent = false }
+)
