@@ -4,4 +4,5 @@ vim.lsp.enable {
   'clangd',
   'ty',
   'ruff',
+  'texlab',
 }

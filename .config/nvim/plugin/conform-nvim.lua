@@ -8,6 +8,13 @@ require('conform').setup {
     -- Use external formatters if configured below, otherwise use LSP formatting
     lsp_format = 'fallback',
   },
+  formatters = {
+    tex_fmt = {
+      inherit = false,
+      command = '/usr/sbin/tex-fmt',
+      args = { '--stdin' },
+    },
+  },
   formatters_by_ft = {
     lua = { 'stylua' },
     python = {
@@ -18,6 +25,8 @@ require('conform').setup {
       -- To organize the imports.
       'ruff_organize_imports',
     },
+    tex = { 'tex_fmt' },
+    c = { 'clang_format' },
   },
 }
 

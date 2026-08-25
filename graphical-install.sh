@@ -83,6 +83,10 @@ Inherits=macOS
 	destdir=$(tar xzvf /tmp/install-tl-unx.tar.gz -C /tmp | head -1 | sed -e 's/\/.*//')
 	(cd "/tmp/$destdir" && ./install-tl -profile "$dot_dir/resources/texlive/texlive.profile")
 
+	# Latex LSP and formatter
+	sudo pacman -S --needed texlab
+	paru -S tex-fmt
+
 	# Update locate db
 	sudo updatedb
 }

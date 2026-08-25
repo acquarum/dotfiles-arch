@@ -1,3 +1,7 @@
+---@brief
+---
+--- https://clangd.llvm.org/installation.html
+---
 --- - **NOTE:** Clang >= 11 is recommended! See [#23](https://github.com/neovim/nvim-lspconfig/issues/23).
 --- - If `compile_commands.json` lives in a build directory, you should
 ---   symlink it to the root of your source tree.
@@ -62,7 +66,7 @@ end
 ---@type vim.lsp.Config
 return {
   cmd = { 'clangd' },
-  filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
+  filetypes = { 'c', 'c.doxygen', 'cpp', 'cpp.doxygen', 'objc', 'objcpp', 'cuda' },
   root_markers = {
     '.clangd',
     '.clang-tidy',
