@@ -1,0 +1,11 @@
+
+[location]
+custom_schedule = true
+sunrise = "07:30"
+sunset = "21:30"
+
+[weather]
+enabled = false
+
+[nightlight]
+enabled = true

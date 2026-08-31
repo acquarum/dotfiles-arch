@@ -13,7 +13,5 @@ fetch_exchange_rates = false
 transparency_mode = "glass"
 
 [brightness]
-minimum_brightness = 0.05
+minimum_brightness = 0.01
 
-[nightlight]
-enabled = true
