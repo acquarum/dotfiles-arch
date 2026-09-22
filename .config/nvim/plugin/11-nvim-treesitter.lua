@@ -1,7 +1,6 @@
 vim.pack.add {
   {
     src = 'https://github.com/nvim-treesitter/nvim-treesitter',
-    version = '4916d6592ede8c07973490d9322f187e07dfefac',
   },
 }
 
@@ -61,7 +60,10 @@ vim.api.nvim_create_autocmd('FileType', {
 
     local installed_parsers = require('nvim-treesitter').get_installed 'parsers'
 
-    if not vim.tbl_contains(installed_parsers, language) and vim.tbl_contains(available_parsers, language) then
+    if
+      not vim.tbl_contains(installed_parsers, language)
+      and vim.tbl_contains(available_parsers, language)
+    then
       -- If a parser is available in `nvim-treesitter` but is not installed, auto-install it
       require('nvim-treesitter').install(language):wait()
     end

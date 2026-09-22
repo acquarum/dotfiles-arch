@@ -32,6 +32,9 @@ main() {
 	# Fonts
 	sudo pacman --needed -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
 
+	# Audio and microphone support
+	sudo pacman --needed -S sof-firmware alsa-utils
+
 	##### NIRI #####
 	sudo pacman -S --needed niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk \
 		gnome-keyring pipewire wireplumber wl-clipboard xdg-utils
