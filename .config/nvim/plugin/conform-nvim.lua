@@ -30,8 +30,7 @@ require('conform').setup {
   },
 }
 
-require('core.helpers').map(
-  '<leader>fo',
-  function() require('conform').format() end,
-  'Conform: [fo]rmat current buffer'
-)
+require('core.helpers').map('<leader>fo', function() require('conform').format() end, {
+  desc = 'Conform: [fo]rmat current buffer',
+  mode = { 'n', 'v' },
+})

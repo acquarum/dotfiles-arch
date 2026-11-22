@@ -1,7 +1,5 @@
 vim.pack.add {
-  {
-    src = 'https://github.com/nvim-treesitter/nvim-treesitter',
-  },
+  'https://github.com/nvim-treesitter/nvim-treesitter',
 }
 
 local parsers = {
@@ -11,7 +9,6 @@ local parsers = {
   'make',
   'bash',
   'zsh',
-  'tmux',
   'toml',
   'json',
   'gitignore',

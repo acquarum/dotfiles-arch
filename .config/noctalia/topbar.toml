@@ -22,7 +22,7 @@ end = [
 ]
 
 [[bar.default.capsule_group]]
-fill = "surface_variant"
+fill = "surface_container"
 id = "g1"
 members = [ "date", "clock" ]
 opacity = 0.0
